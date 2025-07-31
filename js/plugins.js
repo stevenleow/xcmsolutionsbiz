@@ -1,4 +1,3 @@
-
 /*! Hammer.JS - v2.0.4 - 2014-09-28
  * http://hammerjs.github.io/
  *
