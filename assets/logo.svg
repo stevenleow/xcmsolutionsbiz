@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" y="10" width="30" height="30" rx="5" fill="#2563EB"/>
+    <path d="M15 25L25 15M25 35L15 25M15 25L25 35" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <text x="50" y="32" font-family="Arial" font-size="24" font-weight="bold" fill="#1F2937">XCM SOLUTIONS</text>
+</svg>
