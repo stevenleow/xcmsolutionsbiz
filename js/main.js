@@ -96,17 +96,75 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // Function to check if background is light
+    function isLightBackground(section) {
+        // Get computed style of the section
+        const style = window.getComputedStyle(section);
+        // Get background color (try different properties)
+        let bgColor = style.backgroundColor || 
+                     style.background || 
+                     window.getComputedStyle(document.body).backgroundColor;
+        
+        // If no background color, check parent elements
+        if (!bgColor || bgColor === 'rgba(0, 0, 0, 0)' || bgColor === 'transparent') {
+            let parent = section.parentElement;
+            while (parent && parent !== document.body) {
+                const parentStyle = window.getComputedStyle(parent);
+                bgColor = parentStyle.backgroundColor;
+                if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
+                    break;
+                }
+                parent = parent.parentElement;
+            }
+        }
+
+        // Default to dark if we can't determine the color
+        if (!bgColor || bgColor === 'rgba(0, 0, 0, 0)' || bgColor === 'transparent') {
+            return false;
+        }
+
+        // Convert RGB to brightness (0-1)
+        const rgb = bgColor.match(/\d+/g);
+        if (!rgb) return false;
+        
+        const brightness = (parseInt(rgb[0]) * 299 + 
+                          parseInt(rgb[1]) * 587 + 
+                          parseInt(rgb[2]) * 114) / 1000;
+        
+        // Consider light if brightness is over 50%
+        return brightness > 128;
+    }
+
     // Function to add scroll indicator to a section
     function addScrollIndicator(section) {
         // Check if section already has a scroll indicator
         if (!section.querySelector('.scroll-indicator')) {
             const scrollIndicator = document.createElement('div');
             scrollIndicator.className = 'scroll-indicator';
+            
+            // Add dark class if background is light
+            if (isLightBackground(section)) {
+                scrollIndicator.classList.add('dark-bg');
+            }
+            
             scrollIndicator.innerHTML = `
                 <span>Scroll to Explore</span>
                 <i class="fas fa-chevron-down"></i>
             `;
+            
             section.appendChild(scrollIndicator);
+            
+            // Add intersection observer to update on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const isLight = isLightBackground(entry.target);
+                        scrollIndicator.classList.toggle('dark-bg', isLight);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            observer.observe(section);
             
             // Add click event
             scrollIndicator.addEventListener('click', (e) => {
@@ -122,6 +180,8 @@ document.addEventListener('DOMContentLoaded', () => {
             addScrollIndicator(section);
         }
     });
+    
+
     
     // Add click handler for any existing scroll indicators (just in case)
     document.querySelectorAll('.scroll-indicator').forEach(indicator => {
@@ -169,27 +229,43 @@ document.addEventListener('DOMContentLoaded', () => {
         
         /* Scroll indicator styles */
         .scroll-indicator {
-            position: absolute;
+            position: fixed;
             bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
+            right: 0;
+            text-align: center;
+            cursor: pointer;
+            z-index: 1000;
+            pointer-events: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            cursor: pointer;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-            z-index: 10;
+        }
+        
+        .scroll-indicator.dark-bg {
+            color: #7fc4fd;  /* Matching Business Growth blue */
+            text-shadow: 0 0 10px rgba(127, 196, 253, 0.3);
+        }
+        
+        .scroll-indicator span {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #7fc4fd;  /* Matching Business Growth blue */
+            text-shadow: 0 0 10px rgba(127, 196, 253, 0.3);
         }
         
         .scroll-indicator i {
-            margin-top: 8px;
-            font-size: 20px;
+            margin-top: 6px;
+            font-size: 18px;
+            color: #7fc4fd;  /* Matching Business Growth blue */
+            text-shadow: 0 0 10px rgba(127, 196, 253, 0.3);
             animation: bounce 2s infinite;
         }
+        
+
         
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {
