@@ -1,12 +1,52 @@
 /* Base styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
 
-/* Section Borders */
+/* Main container that will be transformed */
+.scroll-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+/* Add visual feedback during scrolling */
+body.is-scrolling .scroll-container {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    line-height: 1.7;
+    background-color: var(--off-white);
+    font-size: 1rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* Section Styles */
 section {
     position: relative;
     box-sizing: border-box;
-    padding: 30px;
+    padding: 5rem 0;
     min-height: 100vh;
-    overflow: hidden;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    transition: transform 0.3s ease-out;
+    will-change: transform;
 }
 
 /* Add border using ::before pseudo-element to ensure visibility */
@@ -21,6 +61,7 @@ section::before {
     pointer-events: none;
     z-index: 1;
 }
+
 
 /* Individual section border colors */
 #home::before { border-color: #00FF00; } /* Green */
@@ -53,6 +94,18 @@ section:not(#home):not(#services):not(#about):not(#solutions):not(#contact)::bef
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--off-white);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
 /* Base Styles */
@@ -2190,6 +2243,17 @@ section::before {
 .hero-section::before {
     display: none;
 }
+
+/* Ensure page is scrollable */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+
+/* Add any new styles below this line */
 
 /* Add a subtle gradient line between sections */
 section::after {
