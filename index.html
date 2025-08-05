@@ -17,6 +17,7 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mainpage.css">
     <script>
         console.log('HTML is being processed');
         console.log('CSS file path:', new URL('css/style.css', window.location.href).href);
@@ -47,54 +48,124 @@
         </div>
     </section>
 
-    <!-- Main Page Content (Starts with Business Section) -->
+    <!-- Enhanced Main Page -->
     <section class="mainpage" id="mainpage">
-        <div class="hero-particles" id="particles-js"></div>
+        <div class="tech-mesh"></div>
+        <div class="circuit-overlay"></div>
+        
         <div class="container">
-            <div class="hero-content">
-
-                <!-- Main Hero Content -->
-                <div class="hero-main-content">
-                    <h1 class="hero-title">
-                        Empowering Businesses with 
-                        <span class="text-gradient">Innovative</span> 
-                        Technology
+            <!-- Main Content Grid -->
+            <div class="main-grid">
+                <!-- Left Column - Content -->
+                <div class="main-content">
+                    <div class="section-tag">
+                        <span>Your Trusted IT Partner</span>
+                        <span class="pulse-dot"></span>
+                    </div>
+                    
+                    <h1 class="main-title">
+                        <span class="text-outline">Transforming</span>
+                        <span class="text-gradient">Businesses</span>
+                        <span>Through Technology</span>
                     </h1>
-                    <p class="hero-subtitle">
-                        XCM Solutions Pte Ltd is a premier Information Technology service and consultancy firm at the 
-                        forefront of digital transformation. We specialize in delivering cutting-edge, tailor-made technology 
-                        solutions that drive business growth, enhance operational efficiency, and create sustainable 
-                        competitive advantages for our clients across Singapore and beyond.
+                    
+                    <p class="main-subtitle">
+                        XCM Solutions Pte Ltd delivers cutting-edge technology solutions that drive growth, 
+                        enhance efficiency, and create sustainable competitive advantages for businesses 
+                        across Singapore and beyond.
                     </p>
                     
-                    <div class="hero-buttons">
-                        <a href="#contact" class="btn btn-primary btn-icon">
+                    <!-- Value Propositions -->
+                    <div class="value-props">
+                        <div class="value-item">
+                            <div class="value-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="value-text">
+                                <h4>Rapid Deployment</h4>
+                                <p>Quick implementation of solutions to accelerate your digital transformation</p>
+                            </div>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="value-text">
+                                <h4>Enterprise Security</h4>
+                                <p>Comprehensive protection for your digital assets and infrastructure</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CTA Buttons -->
+                    <div class="cta-group">
+                        <a href="#contact" class="btn btn-primary btn-pulse">
                             <span>Get Free Consultation</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
+                        <a href="#services" class="btn btn-outline">
+                            <span>Explore Services</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Client Logos -->
+                    <div class="client-logos">
+                        <div class="logos-slide">
+                            <span>Trusted by leading companies:</span>
+                            <div class="logo">Company A</div>
+                            <div class="logo">Company B</div>
+                            <div class="logo">Company C</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Visuals -->
+                <div class="main-visual">
+                    <div class="tech-circle"></div>
+                    <div class="floating-elements">
+                        <div class="floating-icon" style="--delay: 0s; --distance: 20px; --start-pos: 10% 20%;">
+                            <i class="fas fa-cloud"></i>
+                            <span class="pulse-ring"></span>
+                        </div>
+                        <div class="floating-icon" style="--delay: 1s; --distance: -15px; --start-pos: 80% 30%;">
+                            <i class="fas fa-server"></i>
+                            <span class="pulse-ring"></span>
+                        </div>
+                        <div class="floating-icon" style="--delay: 1.5s; --distance: 25px; --start-pos: 60% 80%;">
+                            <i class="fas fa-shield-alt"></i>
+                            <span class="pulse-ring"></span>
+                        </div>
+                    </div>
+                    <div class="main-illustration-container">
+                        <img src="assets/hero-illustration.svg" alt="IT Solutions" class="main-illustration">
+                        <div class="tech-dots"></div>
                     </div>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="hero-image-container">
-                    <img src="assets/hero-illustration.svg" alt="IT Solutions" class="main-image">
-                    <div class="hero-card card-1">
-                        <i class="fas fa-shield-alt"></i>
-                        <div>
-                            <span class="card-title">24/7 Security</span>
-                            <span class="card-desc">Active Monitoring</span>
-                        </div>
-                    </div>
-                    <div class="hero-card card-2">
-                        <i class="fas fa-headset"></i>
-                        <div>
-                            <span class="card-title">Expert Support</span>
-                            <span class="card-desc">Always Available</span>
-                        </div>
-                    </div>
+            
+            <!-- Trust Indicators -->
+            <div class="trust-indicators">
+                <div class="indicator">
+                    <div class="indicator-value" data-count="100">0</div>
+                    <div class="indicator-label">% Client Satisfaction</div>
+                </div>
+                <div class="indicator">
+                    <div class="indicator-value" data-count="15">0</div>
+                    <div class="indicator-label">Years Experience</div>
+                </div>
+                <div class="indicator">
+                    <div class="indicator-value" data-count="500">0</div>
+                    <div class="indicator-suffix">+</div>
+                    <div class="indicator-label">Projects Completed</div>
                 </div>
             </div>
         </div>
+        
+        <!-- Animated Background Elements -->
+        <div class="tech-orb tech-orb-1"></div>
+        <div class="tech-orb tech-orb-2"></div>
+        <div class="tech-orb tech-orb-3"></div>
     </section>
 
     <!-- Services Section -->
