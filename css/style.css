@@ -49,32 +49,6 @@ section {
     will-change: transform;
 }
 
-/* Add border using ::before pseudo-element to ensure visibility */
-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 15px solid transparent;
-    pointer-events: none;
-    z-index: 1;
-}
-
-
-/* Individual section border colors */
-#home::before { border-color: #00FF00; } /* Green */
-#services::before { border-color: #0000FF; } /* Blue */
-#about::before { border-color: #FFA500; } /* Orange */
-#solutions::before { border-color: #FF00FF; } /* Magenta */
-#contact::before { border-color: #00FFFF; } /* Cyan */
-
-/* For any other sections */
-section:not(#home):not(#services):not(#about):not(#solutions):not(#contact)::before {
-    border-color: #A52A2A; /* Brown */
-}
-
 /* Ensure content stays within borders */
 .container {
     position: relative;
@@ -839,18 +813,6 @@ section {
     background: #fff;
 }
 
-/* Common border styles for all sections */
-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    z-index: 1;
-}
-
 /* Hero Section */
 section#home {
     min-height: 100vh;
@@ -862,42 +824,6 @@ section#home {
     justify-content: center;
     position: relative;
     z-index: 1;
-}
-
-/* Hero border */
-section#home::before {
-    border: 15px solid #4a90e2;
-    border-bottom: none;
-}
-
-/* Main Content Section - First after hero */
-section.main-page::before {
-    border: 15px solid #50e3c2;
-    border-top: none;
-}
-
-/* Services Section */
-section#services::before {
-    border: 15px solid #f5a623;
-    border-top: none;
-}
-
-/* Pricing Section */
-section#pricing::before {
-    border: 15px solid #b8e986;
-    border-top: none;
-}
-
-/* CTA Section */
-section.cta::before {
-    border: 15px solid #bd10e0;
-    border-top: none;
-}
-
-/* Contact Section */
-section#contact::before {
-    border: 15px solid #7ed321;
-    border-top: none;
 }
 
 /* Ensure sections take full width and have proper spacing */
