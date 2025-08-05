@@ -259,8 +259,11 @@
         margin: 0 auto 3rem;
     }
     .section-tag, .cta-group {
-        justify-content: center;
-    }
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
     .benefits-grid {
         text-align: left;
     }
