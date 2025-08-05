@@ -154,7 +154,7 @@
                             </div>
                         </div>
                         <!-- Enhanced CTA Button -->
-                        <div class="cta-group" style="margin: 40px 0 20px; justify-content: flex-start;">
+                        <div class="cta-group" style="margin: 80px 0 20px; justify-content: flex-start;">
                             <a href="#contact" class="btn btn-primary" style="
                                 padding: 16px 32px;
                                 font-size: 1.1rem;
@@ -570,6 +570,8 @@
     
     <!-- Scripts -->
     <script>
+        console.log('Initializing scripts...');
+        
         // Log viewport dimensions
         function logViewportSize() {
             const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
@@ -580,7 +582,47 @@
         // Log on load and on resize
         window.addEventListener('load', logViewportSize);
         window.addEventListener('resize', logViewportSize);
+        
+        // Simple error handler
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', {
+                message: e.message,
+                filename: e.filename,
+                lineno: e.lineno,
+                colno: e.colno,
+                error: e.error
+            });
+            return false;
+        });
+        
+        // Load main.js with error handling
+        function loadMainJs() {
+            console.log('Loading main.js...');
+            const script = document.createElement('script');
+            script.src = 'js/main.js';
+            script.onload = function() {
+                console.log('main.js loaded successfully');
+            };
+            script.onerror = function() {
+                console.error('Failed to load main.js');
+            };
+            document.body.appendChild(script);
+        }
+        
+        // Load main.js when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadMainJs);
+        } else {
+            loadMainJs();
+        }
     </script>
-    <script src="js/main.js"></script>
+    
+    <!-- Test Font Awesome -->
+    <div style="position: fixed; top: 10px; right: 10px; background: white; padding: 10px; border-radius: 5px; z-index: 9999;">
+        <div>Font Awesome Test: <i class="fas fa-check" style="color: green;"></i></div>
+        <div id="scroll-indicator-test" style="margin-top: 10px; padding: 5px; background: #f0f0f0; border-radius: 3px;">
+            Scroll Indicator Test
+        </div>
+    </div>
 </body>
 </html>

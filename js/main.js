@@ -1,60 +1,277 @@
-// Typing animation class
-class TypeWriter {
-    constructor(txtElement, words, wait = 2000) {
-        this.txtElement = txtElement;
-        this.words = words;
-        this.txt = '';
-        this.wordIndex = 0;
-        this.wait = parseInt(wait, 10);
-        this.type();
-        this.isDeleting = false;
-    }
+// Set global variable to indicate this script has loaded
+window.mainJsLoaded = true;
+console.log('main.js loaded - Starting initialization...');
 
-    type() {
-        // Current index of word
-        const current = this.wordIndex % this.words.length;
-        // Get full text of current word
-        const fullTxt = this.words[current];
+// Simple scroll indicator functionality
+function initScrollIndicators() {
+    console.log('Initializing scroll indicators...');
+    
+    try {
+        // Debug: Check if styles are being applied
+        console.log('Checking document styles...');
+        console.log('Body styles:', window.getComputedStyle(document.body));
+        
+        // Get all sections
+        const sections = document.querySelectorAll('section');
+        console.log(`Found ${sections.length} sections`);
+        
+        // Add styles for scroll indicators
+        const scrollIndicatorStyle = document.createElement('style');
+        scrollIndicatorStyle.textContent = `
+            .scroll-indicator {
+                position: absolute !important;
+                bottom: 30px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                text-align: center !important;
+                cursor: pointer !important;
+                z-index: 9999 !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transition: opacity 0.3s ease !important;
+            }
+            
+            .scroll-indicator-content {
+                background: rgba(0, 0, 0, 0.9) !important;
+                padding: 12px 24px !important;
+                border-radius: 30px !important;
+                color: white !important;
+                display: inline-block !important;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+                backdrop-filter: blur(5px) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                transition: all 0.3s ease !important;
+            }
+            
+            .scroll-indicator:hover .scroll-indicator-content {
+                transform: translateY(-3px) !important;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35) !important;
+            }
+            
+            .section-counter {
+                display: block !important;
+                font-size: 12px !important;
+                font-weight: 700 !important;
+                color: #7fc4fd !important;
+                margin-bottom: 5px !important;
+                text-transform: uppercase !important;
+                letter-spacing: 1px !important;
+            }
+            
+            .scroll-text {
+                display: block !important;
+                margin: 0 0 5px 0 !important;
+                font-size: 14px !important;
+                font-weight: 500 !important;
+            }
+            
+            .scroll-indicator i {
+                font-size: 16px !important;
+                animation: bounce 2s infinite !important;
+                color: white !important;
+                display: block !important;
+                margin-top: 5px !important;
+            }
+            
+            @keyframes bounce {
+                0%, 20%, 50%, 80%, 100% { 
+                    transform: translateY(0) !important; 
+                }
+                40% { 
+                    transform: translateY(-5px) !important; 
+                }
+                60% { 
+                    transform: translateY(-3px) !important; 
+                }
+            }
+            
+            /* Ensure sections can contain absolute elements */
+            section {
+                position: relative !important;
+                min-height: 100vh !important;
+                overflow: visible !important;
+            }
+        `;
+        document.head.appendChild(scrollIndicatorStyle);
 
-        // Check if deleting
-        if (this.isDeleting) {
-            // Remove char
-            this.txt = fullTxt.substring(0, this.txt.length - 1);
-        } else {
-            // Add char
-            this.txt = fullTxt.substring(0, this.txt.length + 1);
-        }
-
-        // Insert txt into element
-        this.txtElement.innerHTML = `<span class="txt">${this.txt}</span>`;
-
-        // Initial Type Speed
-        let typeSpeed = 100;
-
-        if (this.isDeleting) {
-            typeSpeed /= 2;
-        }
-
-        // If word is complete
-        if (!this.isDeleting && this.txt === fullTxt) {
-            // Make pause at end
-            typeSpeed = this.wait;
-            // Set delete to true
-            this.isDeleting = true;
-        } else if (this.isDeleting && this.txt === '') {
-            this.isDeleting = false;
-            // Move to next word
-            this.wordIndex++;
-            // Pause before start typing
-            typeSpeed = 500;
-        }
-
-        setTimeout(() => this.type(), typeSpeed);
+        // Debug: Log section details
+        sections.forEach((s, i) => {
+            console.log(`Section ${i}:`, {
+                id: s.id || 'no-id',
+                className: s.className,
+                position: window.getComputedStyle(s).position,
+                height: window.getComputedStyle(s).height,
+                hasScrollIndicator: !!s.querySelector('.scroll-indicator')
+            });
+        });
+        
+        // Add scroll indicator to each section except the last one
+        sections.forEach((section, index) => {
+            if (index < sections.length - 1) {
+                console.log(`Adding scroll indicator to section ${index} (${section.id || 'no-id'})`);
+                
+                // Ensure section has relative positioning
+                section.style.position = 'relative';
+                
+                // Create scroll indicator
+                const indicator = document.createElement('div');
+                indicator.className = 'scroll-indicator';
+                indicator.innerHTML = `
+                    <div class="scroll-indicator-content">
+                        <span class="section-counter">#${index + 1} / ${sections.length - 1}</span>
+                        <span class="scroll-text">Scroll to Explore</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                `;
+                
+                // Add click handler with debug logging
+                indicator.addEventListener('click', function(e) {
+                    console.log('Scroll indicator clicked');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Log the current section and target section
+                    const currentSection = this.closest('section');
+                    const currentIndex = Array.from(document.querySelectorAll('section')).indexOf(currentSection);
+                    console.log('Current section index:', currentIndex, 'ID:', currentSection?.id);
+                    
+                    // Manually scroll to the next section
+                    const sections = document.querySelectorAll('section');
+                    if (sections.length > currentIndex + 1) {
+                        const targetSection = sections[currentIndex + 1];
+                        console.log('Scrolling to section:', currentIndex + 1, 'ID:', targetSection.id);
+                        
+                        window.scrollTo({
+                            top: targetSection.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        console.log('No next section found');
+                    }
+                });
+                
+                // Add to section
+                section.appendChild(indicator);
+                console.log(`Added scroll indicator to section ${index}`);
+            }
+        });
+        
+        // Add styles
+        const style = document.createElement('style');
+        style.textContent = `
+            /* Scroll Indicator Styles */
+            .scroll-indicator {
+                position: absolute !important;
+                bottom: 30px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                text-align: center !important;
+                cursor: pointer !important;
+                z-index: 9999 !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                pointer-events: auto !important;
+                display: block !important;
+            }
+            
+            .scroll-indicator-content {
+                background: rgba(0, 0, 0, 0.9) !important;
+                padding: 12px 24px !important;
+                border-radius: 30px !important;
+                color: white !important;
+                display: inline-block !important;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+                backdrop-filter: blur(5px) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                transition: all 0.3s ease !important;
+            }
+            
+            .scroll-indicator:hover .scroll-indicator-content {
+                transform: translateY(-3px) !important;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35) !important;
+            }
+            
+            .section-counter {
+                display: block !important;
+                font-size: 14px !important;
+                font-weight: 700 !important;
+                color: #7fc4fd !important;
+                margin-bottom: 5px !important;
+                text-shadow: none !important;
+                text-transform: uppercase !important;
+                letter-spacing: 1px !important;
+                font-size: 12px !important;
+            }
+            
+            .scroll-text {
+                display: block !important;
+                margin: 0 0 5px 0 !important;
+                font-size: 14px !important;
+                font-weight: 500 !important;
+            }
+            
+            .scroll-indicator i {
+                font-size: 16px !important;
+                animation: bounce 2s infinite !important;
+                color: white !important;
+                display: block !important;
+                margin-top: 5px !important;
+            }
+            
+            @keyframes bounce {
+                0%, 20%, 50%, 80%, 100% { 
+                    transform: translateY(0) !important; 
+                }
+                40% { 
+                    transform: translateY(-5px) !important; 
+                }
+                60% { 
+                    transform: translateY(-3px) !important; 
+                }
+            }
+            
+            /* Ensure sections can contain absolute elements */
+            section {
+                position: relative !important;
+                min-height: 100vh !important;
+                overflow: visible !important;
+            }
+            
+            /* Make sure parent containers don't hide the indicator */
+            .hero, .mainpage, .services, .pricing, .cta, .contact {
+                overflow: visible !important;
+            }
+        `;
+        
+        // Add styles to head
+        document.head.appendChild(style);
+        console.log('Added scroll indicator styles');
+        
+    } catch (error) {
+        console.error('Error in initScrollIndicators:', error);
     }
 }
 
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM fully loaded (via event listener)');
+        initScrollIndicators();
+    });
+} else {
+    console.log('DOM already loaded');
+    initScrollIndicators();
+}
+
+console.log('main.js initialization complete');
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('XCM Solutions website loaded');
+    console.log('[DEBUG] DOM fully loaded and parsed');
+    
+    // Debug: Check sections
+    const allSections = document.querySelectorAll('section');
+    console.log(`[DEBUG] Found ${allSections.length} sections:`, Array.from(allSections).map((s, i) => `#${i}: ${s.id || 'unnamed'}`).join(', '));
     
     // Initialize typing animation
     const txtElement = document.querySelector('.typing-text');
@@ -69,19 +286,41 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Function to get current section
     function getCurrentSection() {
-        return document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2).closest('section');
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const element = document.elementFromPoint(centerX, centerY);
+        return element ? element.closest('section') : document.querySelector('section');
     }
     
     // Function to scroll to next section
     function scrollToNextSection() {
+        console.log('scrollToNextSection called');
         const currentSection = getCurrentSection();
-        const currentIndex = sections.findIndex(section => section === currentSection);
-        const nextIndex = (currentIndex + 1) % sections.length;
+        console.log('Current section:', currentSection ? currentSection.id : 'none');
         
-        sections[nextIndex].scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
+        if (!currentSection) {
+            console.log('No current section found, scrolling to first section');
+            sections[0]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+        }
+        
+        const currentIndex = sections.findIndex(section => section === currentSection);
+        console.log('Current section index:', currentIndex);
+        
+        if (currentIndex === -1) {
+            console.log('Current section not found in sections array');
+            return;
+        }
+        
+        const nextIndex = (currentIndex + 1) % sections.length;
+        console.log('Scrolling to section index:', nextIndex, 'ID:', sections[nextIndex]?.id);
+        
+        if (sections[nextIndex]) {
+            sections[nextIndex].scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     }
     
     // Function to scroll to previous section
@@ -136,7 +375,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Function to add scroll indicator to a section
-    function addScrollIndicator(section) {
+    function addScrollIndicator(section, index) {
+        console.log(`[DEBUG] Adding scroll indicator to section ${index}`, {
+            id: section.id || 'no-id',
+            classList: section.className,
+            textContent: section.textContent.substring(0, 100) + '...'
+        });
         // Check if section already has a scroll indicator
         if (!section.querySelector('.scroll-indicator')) {
             const scrollIndicator = document.createElement('div');
@@ -147,9 +391,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollIndicator.classList.add('dark-bg');
             }
             
+            const totalSections = document.querySelectorAll('section').length - 1; // -1 to exclude the last section
+            console.log(`[DEBUG] Creating indicator for section ${index + 1} of ${totalSections}`, {section, index, totalSections});
+            
+            // Create indicator with inline styles for maximum visibility
             scrollIndicator.innerHTML = `
-                <span>Scroll to Explore</span>
-                <i class="fas fa-chevron-down"></i>
+                <div class="scroll-indicator-content" style="background: rgba(0,0,0,0.8) !important; padding: 15px 25px !important; border-radius: 10px !important; color: white !important;">
+                    <span class="section-counter" style="display: block !important; font-size: 16px !important; font-weight: bold !important; color: white !important; background: #0071e3 !important; padding: 5px 10px !important; border-radius: 10px !important; margin-bottom: 8px !important;">
+                        #${index + 1} / ${totalSections}
+                    </span>
+                    <span class="scroll-text" style="display: block !important; font-size: 14px !important; margin-bottom: 5px !important;">
+                        Scroll to Explore
+                    </span>
+                    <i class="fas fa-chevron-down" style="font-size: 16px !important;"></i>
+                </div>
             `;
             
             section.appendChild(scrollIndicator);
@@ -175,9 +430,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Add scroll indicators to all sections except the last one
+    console.log(`[DEBUG] Found ${sections.length} sections`);
     sections.forEach((section, index) => {
+        console.log(`[DEBUG] Processing section ${index}`, {
+            id: section.id || 'no-id',
+            className: section.className,
+            nodeName: section.nodeName,
+            hasScrollIndicator: !!section.querySelector('.scroll-indicator')
+        });
+        
         if (index < sections.length - 1) { // Skip last section
-            addScrollIndicator(section);
+            console.log(`[DEBUG] Adding scroll indicator to section ${index}`);
+            addScrollIndicator(section, index);
+            console.log(`[DEBUG] After adding indicator to section ${index}`, {
+                hasScrollIndicator: !!section.querySelector('.scroll-indicator')
+            });
+        } else {
+            console.log(`[DEBUG] Skipping last section (${index})`);
         }
     });
     
@@ -227,34 +496,53 @@ document.addEventListener('DOMContentLoaded', () => {
             scroll-behavior: smooth;
         }
         
-        /* Scroll indicator styles */
+        /* Scroll indicator styles - Added !important to override any conflicting styles */
         .scroll-indicator {
-            position: fixed;
-            bottom: 30px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            cursor: pointer;
-            z-index: 1000;
-            pointer-events: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: fixed !important;
+            bottom: 30px !important;
+            left: 0 !important;
+            right: 0 !important;
+            text-align: center !important;
+            cursor: pointer !important;
+            z-index: 1000 !important;
+            pointer-events: auto !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            transition: all 0.3s ease !important;
+            animation: none !important; /* Remove any conflicting animations */
         }
         
-        .scroll-indicator.dark-bg {
-            color: #7fc4fd;  /* Matching Business Growth blue */
-            text-shadow: 0 0 10px rgba(127, 196, 253, 0.3);
+        .scroll-indicator-content {
+            background: rgba(0, 0, 0, 0.7) !important;
+            padding: 10px 20px !important;
+            border-radius: 30px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 6px !important;
+            backdrop-filter: blur(5px) !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
         }
         
-        .scroll-indicator span {
-            display: block;
-            width: 100%;
-            text-align: center;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #7fc4fd;  /* Matching Business Growth blue */
-            text-shadow: 0 0 10px rgba(127, 196, 253, 0.3);
+        .scroll-indicator.dark-bg .scroll-indicator-content {
+            background: rgba(255, 255, 255, 0.7) !important;
+        }
+        
+        .scroll-indicator .section-counter {
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            color: #fff !important;
+            background: linear-gradient(135deg, #0071e3 0%, #004a99 100%) !important;
+            padding: 6px 12px !important;
+            border-radius: 20px !important;
+            margin-bottom: 8px !important;
+            display: inline-block !important;
+            min-width: 60px !important;
+            text-shadow: none !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+            position: relative;
+            z-index: 1;
         }
         
         .scroll-indicator i {
