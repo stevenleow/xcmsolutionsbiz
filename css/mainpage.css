@@ -277,7 +277,6 @@
 .logo-item {
     display: flex;
     align-items: center;
-    gap: 8px;
     padding: 10px 20px;
     background: white;
     border-radius: 8px;
@@ -288,11 +287,6 @@
 
 .logo-item:hover {
     transform: translateY(-3px);
-}
-
-.logo-item i {
-    color: var(--primary-color);
-    font-size: 18px;
 }
 
 /* Responsive Styles */
