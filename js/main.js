@@ -149,29 +149,85 @@ function initScrollFunctionality() {
         scrollIndicator.className = 'scroll-indicator';
         scrollIndicator.innerHTML = `
             <div class="scroll-indicator-content">
+                <i class="fas fa-chevron-up up-arrow" aria-hidden="true"></i>
                 <span class="scroll-text">Scroll to Explore</span>
-                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                <i class="fas fa-chevron-down down-arrow" aria-hidden="true"></i>
             </div>
         `;
         heroSection.appendChild(scrollIndicator);
         
+        const upArrow = scrollIndicator.querySelector('.up-arrow');
+        const downArrow = scrollIndicator.querySelector('.down-arrow');
+        const indicatorText = scrollIndicator.querySelector('.scroll-text');
+        
+        function updateIndicator() {
+            // Hide up arrow on first section
+            upArrow.style.display = currentSectionIndex === 0 ? 'none' : 'block';
+            // Hide down arrow on last section
+            downArrow.style.display = currentSectionIndex >= sections.length - 1 ? 'none' : 'block';
+            
+            // Update text based on position
+            if (currentSectionIndex === 0) {
+                indicatorText.textContent = 'Scroll to Explore';
+            } else if (currentSectionIndex >= sections.length - 1) {
+                indicatorText.textContent = 'Back to Top';
+            } else {
+                indicatorText.textContent = 'Explore More';
+            }
+            
+            // Update state classes
+            scrollIndicator.classList.toggle('at-top', currentSectionIndex === 0);
+            scrollIndicator.classList.toggle('at-bottom', currentSectionIndex >= sections.length - 1);
+            scrollIndicator.classList.toggle('in-middle', currentSectionIndex > 0 && currentSectionIndex < sections.length - 1);
+        }
+        
+        // Initial update
+        updateIndicator();
+        
+        // Handle scroll events
+        window.addEventListener('scroll', () => {
+            updateSections();
+            updateIndicator();
+        });
+        
+        // Handle indicator clicks
         scrollIndicator.addEventListener('click', (e) => {
             e.preventDefault();
             updateSections();
             
-            if (currentSectionIndex >= sections.length - 1) {
-                return;
+            // Determine which part was clicked
+            const isUpArrow = e.target.classList.contains('up-arrow') || 
+                             e.target.closest('.up-arrow');
+            const isDownArrow = e.target.classList.contains('down-arrow') || 
+                              e.target.closest('.down-arrow');
+            
+            if (isUpArrow || (currentSectionIndex > 0 && !isDownArrow)) {
+                // Scroll up
+                if (currentSectionIndex > 0) {
+                    const prevSection = sections[currentSectionIndex - 1];
+                    if (prevSection) {
+                        prevSection.scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start',
+                            inline: 'nearest'
+                        });
+                        currentSectionIndex--;
+                    }
+                }
+            } else if (isDownArrow || currentSectionIndex < sections.length - 1) {
+                // Scroll down
+                const nextSection = sections[currentSectionIndex + 1];
+                if (nextSection) {
+                    nextSection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start',
+                        inline: 'nearest'
+                    });
+                    currentSectionIndex++;
+                }
             }
             
-            const nextSection = sections[currentSectionIndex + 1];
-            if (nextSection) {
-                nextSection.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start',
-                    inline: 'nearest'
-                });
-                currentSectionIndex++;
-            }
+            updateIndicator();
         });
     }
 }
