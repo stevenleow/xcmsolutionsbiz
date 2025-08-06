@@ -66,13 +66,14 @@ section::before {
     z-index: 1;
 }
 
+/* Section border colors for development */
 #hero::before { border-color: rgba(255, 99, 71, 0.3); }       /* Tomato */
-#mainpage::before { border-color: rgba(75, 192, 192, 0.3); }   /* Teal */
-#about::before { border-color: rgba(255, 205, 86, 0.3); }      /* Yellow */
-#services::before { border-color: rgba(54, 162, 235, 0.3); }   /* Blue */
-#contact::before { border-color: rgba(153, 102, 255, 0.3); }   /* Purple */
-
-/* Add more sections as needed */
+#features::before { border-color: rgba(75, 192, 192, 0.3); }   /* Teal */
+#services::before { border-color: rgba(153, 102, 255, 0.3); }  /* Purple */
+#pricing::before { border-color: rgba(255, 159, 64, 0.3); }    /* Orange */
+#about::before { border-color: rgba(54, 162, 235, 0.3); }     /* Blue */
+#contact::before { border-color: rgba(255, 206, 86, 0.3); }   /* Yellow */
+#cta::before { border-color: rgba(75, 192, 192, 0.3); }       /* Teal */
 #section1::before { border-color: rgba(255, 159, 64, 0.3); }   /* Orange */
 #section2::before { border-color: rgba(201, 203, 207, 0.3); }  /* Grey */
 #section3::before { border-color: rgba(255, 99, 132, 0.3); }   /* Pink */
