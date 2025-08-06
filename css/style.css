@@ -158,26 +158,28 @@ section {
     background-color: var(--dark-bg);
     color: var(--text-on-dark);
     position: relative;
-    padding: 2rem 1.5rem 0;
+    padding: 0;
     overflow: hidden;
-    margin: 0 auto;
+    margin: 0;
     box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 /* Hero content container */
 .hero-content {
-    max-width: 1400px;
+    max-width: 1200px;
     width: 100%;
-    margin: 0;
+    margin: 0 auto;
     position: relative;
     z-index: 1;
-    padding: 0 2rem 0 10%; /* Reduced left padding to shift content left */
-    text-align: left;
-    min-height: 33vh;
+    padding: 2rem;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 33vh;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero-title {
@@ -303,8 +305,8 @@ section {
 .hero-subtitle-container {
     position: relative;
     width: 100%;
-    max-width: 1200px;
-    margin: 2rem auto 3.5rem;
+    max-width: 800px;
+    margin: 1.5rem auto 3rem;
     padding: 0 2rem;
     text-align: center;
     z-index: 2;
