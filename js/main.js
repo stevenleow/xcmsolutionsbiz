@@ -4,6 +4,25 @@ console.log('main.js loaded - Starting initialization...');
 
 // TypeWriter Class
 class TypeWriter {
+    adjustTextSize() {
+        const container = this.txtElement;
+        const text = container.querySelector('.wrap');
+        if (!text) return;
+        
+        // Reset to default size (reduced by 10% from 2.8rem to ~2.5rem)
+        const defaultSize = 2.5;
+        text.style.fontSize = `${defaultSize}rem`;
+        
+        // Check if text overflows
+        if (text.scrollWidth > container.offsetWidth) {
+            // Calculate the scale factor needed to fit the text
+            const scale = (container.offsetWidth - 20) / text.scrollWidth;
+            const newSize = Math.floor(defaultSize * scale * 10) / 10; // Calculate new size in rem
+            
+            // Set minimum font size (reduced by 10% from 1.8rem to ~1.6rem)
+            text.style.fontSize = `${Math.max(newSize, 1.6)}rem`;
+        }
+    }
     constructor(txtElement, words, wait = 3000) {
         this.txtElement = txtElement;
         this.words = words;
@@ -25,8 +44,9 @@ class TypeWriter {
         }
 
         this.txtElement.innerHTML = `<span class="wrap">${this.txt}</span>`;
+        this.adjustTextSize();
 
-        let typeSpeed = 150;
+        let typeSpeed = 100;
 
         if (this.isDeleting) {
             typeSpeed /= 2;
