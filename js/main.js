@@ -4,33 +4,83 @@ console.log('main.js loaded - Starting initialization...');
 
 // TypeWriter Class
 class TypeWriter {
-    adjustTextSize() {
-        const container = this.txtElement;
-        const text = container.querySelector('.wrap');
-        if (!text) return;
-        
-        // Reset to default size (reduced by 10% from 2.8rem to ~2.5rem)
-        const defaultSize = 2.5;
-        text.style.fontSize = `${defaultSize}rem`;
-        
-        // Check if text overflows
-        if (text.scrollWidth > container.offsetWidth) {
-            // Calculate the scale factor needed to fit the text
-            const scale = (container.offsetWidth - 20) / text.scrollWidth;
-            const newSize = Math.floor(defaultSize * scale * 10) / 10; // Calculate new size in rem
-            
-            // Set minimum font size (reduced by 10% from 1.8rem to ~1.6rem)
-            text.style.fontSize = `${Math.max(newSize, 1.6)}rem`;
-        }
-    }
     constructor(txtElement, words, wait = 3000) {
         this.txtElement = txtElement;
         this.words = words;
         this.txt = '';
         this.wordIndex = 0;
         this.wait = parseInt(wait, 10);
-        this.type();
         this.isDeleting = false;
+        
+        // Add event listeners
+        this.handleResize = this.handleResize.bind(this);
+        window.addEventListener('resize', this.handleResize);
+        
+        // Initial setup
+        this.txtElement.style.visibility = 'visible';
+        this.txtElement.style.opacity = '1';
+        
+        // Check initial layout
+        this.checkLayout();
+        
+        // Start the typing effect
+        this.type();
+    }
+
+    handleResize() {
+        // Check if we need to switch between single and multi-line layout
+        this.checkLayout();
+        
+        // Recalculate text size on window resize
+        if (this.txt) {
+            this.adjustTextSize();
+        }
+    }
+    
+    checkLayout() {
+        const container = this.txtElement.parentElement;
+        const prefix = container.querySelector('.hero-title-prefix');
+        const text = this.txtElement.querySelector('.wrap') || document.createElement('span');
+        
+        // Temporarily set text to the current word to measure
+        const currentWord = this.words[this.wordIndex % this.words.length];
+        text.textContent = currentWord;
+        
+        // Check if text overflows the container
+        const containerWidth = container.offsetWidth;
+        const textWidth = text.scrollWidth;
+        const prefixWidth = prefix ? prefix.offsetWidth : 0;
+        const availableWidth = containerWidth - prefixWidth - 40; // 40px for padding/margins
+        
+        // Toggle multiline class based on available space
+        if (textWidth > availableWidth) {
+            this.txtElement.classList.add('multiline');
+            if (prefix) prefix.style.textAlign = 'center';
+        } else {
+            this.txtElement.classList.remove('multiline');
+            if (prefix) prefix.style.textAlign = 'right';
+        }
+    }
+    
+    adjustTextSize() {
+        const container = this.txtElement;
+        const text = container.querySelector('.wrap');
+        if (!text) return;
+        
+        // Get computed font size from CSS
+        const computedStyle = window.getComputedStyle(container);
+        const baseSize = parseFloat(computedStyle.fontSize);
+        
+        // Reset to base size
+        text.style.fontSize = '';
+        
+        // Check if text overflows
+        if (text.scrollWidth > container.offsetWidth) {
+            // Calculate the scale factor needed to fit the text
+            const scale = (container.offsetWidth - 20) / text.scrollWidth;
+            const newSize = Math.max(baseSize * scale, 16); // 16px minimum font size
+            text.style.fontSize = `${newSize}px`;
+        }
     }
 
     type() {
@@ -43,7 +93,13 @@ class TypeWriter {
             this.txt = fullTxt.substring(0, this.txt.length + 1);
         }
 
-        this.txtElement.innerHTML = `<span class="wrap">${this.txt}</span>`;
+        // Insert line breaks for multi-line text
+        let displayText = this.txt;
+        if (this.txt.includes('\n')) {
+            displayText = this.txt.replace(/\n/g, '<br>');
+        }
+        
+        this.txtElement.innerHTML = `<span class="wrap">${displayText}</span>`;
         this.adjustTextSize();
 
         let typeSpeed = 100;

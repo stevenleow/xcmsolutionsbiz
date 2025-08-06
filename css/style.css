@@ -39,6 +39,12 @@
     box-sizing: border-box;
 }
 
+html, body {
+    min-width: 320px;
+    width: 100%;
+    overflow-x: hidden;
+}
+
 html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -148,19 +154,23 @@ section {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    min-width: 100vw;
     background-color: var(--dark-bg);
     color: var(--text-on-dark);
     position: relative;
     padding: 2rem 1.5rem 0;
     overflow: hidden;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
+/* Hero content container */
 .hero-content {
     max-width: 1400px;
     width: 100%;
     margin: 0;
     position: relative;
-    z-index: 2;
+    z-index: 1;
     padding: 0 2rem 0 10%; /* Reduced left padding to shift content left */
     text-align: left;
     min-height: 33vh;
@@ -203,32 +213,61 @@ section {
     min-height: 100%;
 }
 
+/* Typing text base styles */
 .typing-text {
-    min-height: 1.2em;
     text-align: left;
     display: flex;
     align-items: center;
-    font-size: 2.5rem; /* Reduced by 10% from 2.8rem */
-    line-height: 1.2;
-    height: 100%;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    line-height: 1.4;
     margin: 0;
     padding: 0 0 0 2rem;
     width: 59%;
     box-sizing: border-box;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
-/* Ensure the text scales properly */
+/* Single line mode (default) */
 .typing-text .wrap {
     display: inline-block;
+    white-space: normal;
     max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: visible;
+    text-overflow: clip;
     vertical-align: middle;
-    transition: font-size 0.3s ease;
+    transition: all 0.3s ease;
+    word-break: break-word;
+}
+
+/* Multi-line mode */
+.typing-text.multiline {
+    align-items: flex-start;
+}
+
+.typing-text.multiline .wrap {
+    white-space: normal;
+    word-wrap: break-word;
+    text-overflow: clip;
+    display: inline;
+}
+
+/* Center align with prefix when multiline */
+.typing-text.multiline {
+    text-align: center;
+    justify-content: center;
+    padding-left: 0;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* Adjust hero title layout for multiline mode */
+.hero-title {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 /* Responsive adjustments */
@@ -261,19 +300,29 @@ section {
     }
 }
 
+.hero-subtitle-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto 3.5rem;
+    padding: 0 2rem;
+    text-align: center;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
 .hero-subtitle {
     font-size: 1.5rem;
-    margin: 0 auto 3.5rem; /* Increased bottom margin */
     color: var(--text-on-dark);
     opacity: 0.9;
     max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
     line-height: 1.6;
-    padding: 0 1rem;
-    padding-top: 29vh;
 }
 
 .scroll-indicator {
-    position: absolute;
+    position: fixed; /* Changed from absolute to fixed */
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
@@ -284,6 +333,8 @@ section {
     color: var(--text-on-dark);
     opacity: 0.8;
     transition: opacity 0.3s ease;
+    z-index: 1000; /* Ensure it's above other content */
+    pointer-events: auto; /* Ensure it's clickable */
 }
 
 .scroll-indicator:hover {
