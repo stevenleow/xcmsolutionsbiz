@@ -145,9 +145,8 @@ function initScrollFunctionality() {
     // Add scroll indicator
     const heroSection = document.querySelector('.hero');
     if (heroSection) {
-        const scrollIndicator = document.createElement('button');
+        const scrollIndicator = document.createElement('div');
         scrollIndicator.className = 'scroll-indicator';
-        scrollIndicator.setAttribute('aria-label', 'Scroll to next section');
         scrollIndicator.innerHTML = `
             <div class="scroll-indicator-content">
                 <span class="scroll-text">Scroll to Explore</span>
