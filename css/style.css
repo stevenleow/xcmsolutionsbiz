@@ -59,7 +59,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
-    margin-top: 3rem;
+    margin-top: 0;
 }
 
 /* Content Styling */
@@ -75,12 +75,16 @@
 }
 
 .main-title {
-    font-size: 2.8rem;
+    font-size: 3.276rem;
     line-height: 1.2;
     margin: 0.5rem 0 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+}
+
+.main-title .text-gradient {
+    font-size: 1.17em; /* Makes the word 'Transforming' 17% larger */
 }
 
 .main-subtitle {
