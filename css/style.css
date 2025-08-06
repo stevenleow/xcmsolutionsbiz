@@ -595,8 +595,118 @@ section {
 
 /* About Section */
 .about {
-    background-color: var(--light-gray);
-    padding: 6rem 0;
+    padding: 8rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.about-content {
+    max-width: 600px;
+}
+
+.about h2 {
+    font-size: 2.5rem;
+    margin: 1.5rem 0;
+    color: var(--text);
+    line-height: 1.3;
+}
+
+.about p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.about-features {
+    margin: 2.5rem 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.feature-item i {
+    color: var(--primary);
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    margin-top: 0.2rem;
+}
+
+.feature-item h4 {
+    color: var(--text);
+    margin-bottom: 0.3rem;
+    font-size: 1.1rem;
+}
+
+.feature-item p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.about-image {
+    position: relative;
+    padding: 2rem;
+}
+
+.about-illustration {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.about-illustration:hover {
+    transform: translateY(-5px);
+}
+
+/* Section CTAs */
+.section-cta {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.section-cta p {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    color: var(--text-on-dark);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .about-content {
+        max-width: 100%;
+        margin-bottom: 3rem;
+    }
+    
+    .feature-item {
+        justify-content: center;
+        text-align: left;
+    }
+    
+    .about-illustration {
+        max-width: 80%;
+        margin: 0 auto;
+    }
 }
 
 /* Pricing Section */
