@@ -96,13 +96,88 @@ class TypeWriter {
 
 // Initialize TypeWriter functionality
 function initTypeWriter() {
-    const txtElements = document.querySelectorAll('.typing-text');
+    // Mobile Menu Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
     
-    txtElements.forEach(txtElement => {
-        const words = JSON.parse(txtElement.getAttribute('data-words'));
-        const wait = txtElement.getAttribute('data-wait') || 3000;
-        new TypeWriter(txtElement, words, wait);
+    // Toggle mobile menu
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+    }
+    
+    // Close mobile menu when clicking on a nav link
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Close menu if open
+            if (menuToggle.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+            
+            // Smooth scroll to section
+            const targetId = this.getAttribute('href');
+            if (targetId.startsWith('#')) {
+                e.preventDefault();
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80, // Account for fixed header
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
     });
+    
+    // Add scroll event for header
+    const header = document.querySelector('.header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        // Add/remove scrolled class based on scroll position
+        if (currentScroll > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+        
+        // Optional: Hide header on scroll down, show on scroll up
+        if (currentScroll <= 0) {
+            header.classList.remove('scroll-up');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && !header.classList.contains('scroll-down')) {
+            // Scroll down
+            header.classList.remove('scroll-up');
+            header.classList.add('scroll-down');
+        } else if (currentScroll < lastScroll && header.classList.contains('scroll-down')) {
+            // Scroll up
+            header.classList.remove('scroll-down');
+            header.classList.add('scroll-up');
+        }
+        
+        lastScroll = currentScroll;
+    });
+    
+    // Typing animation
+    const txtElement = document.querySelector('.typing-text');
+    if (txtElement) {
+        const words = JSON.parse(txtElement.getAttribute('data-words'));
+        const wait = parseInt(txtElement.getAttribute('data-wait'));
+        
+        if (words) {
+            new TypeWriter(txtElement, words, wait);
+        }
+    }
 }
 
 // Initialize scroll functionality
