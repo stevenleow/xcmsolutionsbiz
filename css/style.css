@@ -330,23 +330,41 @@ section {
     right: 0;
     display: flex;
     justify-content: center;
+    align-items: center;
     text-decoration: none;
     color: var(--text-on-dark);
     opacity: 0.8;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
     z-index: 1000;
     pointer-events: auto;
     width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
+    font-family: inherit;
+}
+
+.scroll-indicator:focus {
+    outline: none;
+    opacity: 1;
+}
+
+.scroll-indicator:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.scroll-indicator:hover {
+    opacity: 1;
 }
 
 .scroll-indicator-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.scroll-indicator:hover {
-    opacity: 1;
+    gap: 0.5rem;
 }
 
 .scroll-arrow {
