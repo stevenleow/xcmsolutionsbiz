@@ -17,35 +17,26 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/mainpage.css">
     <script>
         console.log('HTML is being processed');
         console.log('CSS file path:', new URL('css/style.css', window.location.href).href);
     </script>
 </head>
 <body>
-    <!-- Hero Section (Full Viewport) -->
+    <!-- Hero Section -->
     <section class="hero" id="hero">
-        <div class="hero-gradient-overlay"></div>
-        
-        <!-- Fullscreen IT Solutions Card -->
-        <div class="it-solutions-card" id="fullscreen-card">
-            <div class="card-content">
-                <div class="card-icon">
-                    <i class="fas fa-laptop-code"></i>
-                </div>
-                <p class="card-subtitle">
-                    Empowering your 
-                    <span class="typing-container">
-                        <span class="typing-text" data-words='["Business Growth", "IT Security", "Cloud Services", "Digital Transformation"]' data-wait="2000"></span>
-                    </span>
-                </p>
-                <div class="card-cta" id="explore-cta">
-                    <span>Explore Our Services <i class="fas fa-arrow-right"></i></span>
-                </div>
-            </div>
-            <div class="card-highlight"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="hero-title-prefix">Empowering Your<br>Business with</span>
+                <span class="typing-text text-gradient" data-wait="3000" data-words='["Innovative IT Solutions", "Cutting-Edge Technology", "Reliable Support"]'></span>
+            </h1>
+            <p class="hero-subtitle">Your trusted partner for comprehensive IT support, cloud services, and cybersecurity.</p>
+            <a href="#services" class="btn btn-primary">Explore Our Services</a>
         </div>
+        <a href="#mainpage" class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+            <span class="scroll-text">Scroll to Explore</span>
+        </a>
     </section>
 
     <!-- Main Page -->
@@ -232,7 +223,6 @@
                 </div>
                 
                 <div class="service-card featured">
-                    <div class="popular-tag">Most Popular</div>
                     <div class="service-icon">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <div class="icon-bg"></div>
@@ -303,6 +293,17 @@
         </div>
     </section>
 
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-tag">About Us</span>
+                <h2>Your Trusted IT Partner</h2>
+                <p class="section-subtitle">XCM Solutions is a leading IT solutions provider in Singapore, dedicated to helping businesses leverage technology to achieve their goals.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Pricing Section -->
     <section class="pricing" id="pricing">
         <div class="container">
@@ -337,9 +338,8 @@
                     <a href="#contact" class="btn btn-outline btn-block">Get Started</a>
                 </div>
                 
-                <!-- Popular Plan -->
+                <!-- Professional Plan -->
                 <div class="pricing-card featured">
-                    <div class="popular-tag">Most Popular</div>
                     <div class="pricing-header">
                         <h3>Professional</h3>
                         <div class="price">
@@ -525,10 +525,9 @@
                 <div class="footer-links">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#home">Home</a></li>
+                        <li><a href="#hero">Home</a></li>
                         <li><a href="#services">Services</a></li>
                         <li><a href="#about">About Us</a></li>
-                        <li><a href="#solutions">Solutions</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
