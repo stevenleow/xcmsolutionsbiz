@@ -143,27 +143,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Add "Scroll to Explore" indicator to all sections except the last
-    const sections = document.querySelectorAll('section');
-    sections.forEach((section, index) => {
-        // Don't add the button to the last section
-        if (index < sections.length - 1) {
-            const scrollIndicator = document.createElement('div');
-            scrollIndicator.className = 'scroll-indicator';
-            scrollIndicator.innerHTML = `
-                <div class="scroll-indicator-content">
-                    <span class="scroll-text">Scroll to Explore</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            `;
-            section.appendChild(scrollIndicator);
-
-            scrollIndicator.addEventListener('click', () => {
-                const nextSection = sections[index + 1];
-                if (nextSection) {
-                    nextSection.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        }
-    });
+    // Add "Scroll to Explore" indicator only to the hero section
+    const heroSection = document.querySelector('.hero');
+    if (heroSection) {
+        const scrollIndicator = document.createElement('div');
+        scrollIndicator.className = 'scroll-indicator';
+        scrollIndicator.innerHTML = `
+            <div class="scroll-indicator-content">
+                <span class="scroll-text">Scroll to Explore</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        `;
+        heroSection.appendChild(scrollIndicator);
+        
+        scrollIndicator.addEventListener('click', () => {
+            const mainpageSection = document.querySelector('.mainpage');
+            if (mainpageSection) {
+                mainpageSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
 });

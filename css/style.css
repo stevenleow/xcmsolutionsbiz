@@ -324,19 +324,25 @@ section {
 }
 
 .scroll-indicator {
-    position: fixed; /* Changed from absolute to fixed */
+    position: fixed;
     bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
     text-decoration: none;
     color: var(--text-on-dark);
     opacity: 0.8;
     transition: opacity 0.3s ease;
-    z-index: 1000; /* Ensure it's above other content */
-    pointer-events: auto; /* Ensure it's clickable */
+    z-index: 1000;
+    pointer-events: auto;
+    width: 100%;
+}
+
+.scroll-indicator-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .scroll-indicator:hover {
