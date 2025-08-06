@@ -129,7 +129,14 @@ function initScrollFunctionality() {
             if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
                 if (currentSectionIndex !== i) {
                     currentSectionIndex = i;
-                    console.log('Current section:', currentSectionIndex, sections[currentSectionIndex].id || 'unnamed-section');
+                    const sectionName = sections[currentSectionIndex].id || 'unnamed-section';
+                    console.log('Current section:', currentSectionIndex, sectionName);
+                    
+                    // Update development indicator
+                    const devIndicator = document.getElementById('devIndicator');
+                    if (devIndicator) {
+                        devIndicator.textContent = sectionName;
+                    }
                 }
                 break;
             }
