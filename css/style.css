@@ -263,6 +263,20 @@ a:hover { color: var(--primary); }
     color: rgba(255, 255, 255, 0.85);
 }
 
+.section-label {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    font-weight: bold;
+    z-index: 10;
+    text-transform: uppercase;
+}
+
 .scroll-indicator {
     position: absolute;
     bottom: 2rem;
