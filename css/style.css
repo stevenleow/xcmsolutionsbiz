@@ -96,10 +96,12 @@ a { color: var(--accent); text-decoration: none; transition: var(--transition); 
 a:hover { color: var(--primary); }
 
 .text-gradient {
-    background: linear-gradient(90deg, var(--primary-light), var(--secondary));
+    background: linear-gradient(90deg, var(--secondary), var(--accent));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
 }
 
 /* =======================================
@@ -119,6 +121,11 @@ a:hover { color: var(--primary); }
     transition: var(--transition);
     border: 2px solid transparent;
     font-size: 1rem;
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% center;
+  }
 }
 
 .btn-primary {
