@@ -252,15 +252,77 @@ a:hover { color: var(--primary); }
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     color: var(--white);
     margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.hero-title-line {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    transform: translateY(-10px);
+}
+
+.typing-text {
+    display: block;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    min-height: 1.2em;
+    margin-top: 0.5rem;
+}
+
+.typing-text .wrap {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    min-height: 1.2em;
+}
+
+.typing-text .cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1.2em;
+    background-color: white;
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: blink 1s infinite;
+}
+
+.typing-text .text {
+    display: inline;
+    color: white; /* Fallback for older browsers */
+    line-height: 1.4;
+}
+
+/* Animation for the cursor */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
 .hero-title .typing-text {
     display: block;
-    color: var(--white);
-    background: linear-gradient(90deg, var(--white) 0%, #a5b4fc 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    min-height: 3em; /* Prevent layout shift */
+    height: 3em; /* Prevent layout shift */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
 .hero-subtitle {
@@ -268,6 +330,11 @@ a:hover { color: var(--primary); }
     max-width: 600px;
     margin: 0 auto 2.5rem;
     color: rgba(255, 255, 255, 0.85);
+    transform: translateY(20px);
+}
+
+.hero-content .btn {
+    transform: translateY(20px);
 }
 
 .section-label {

@@ -144,52 +144,38 @@ class TypeWriter {
                 this.txt = fullTxt.substring(0, this.txt.length + 1);
             }
 
-            // Insert line breaks for multi-line text
-            let displayText = this.txt;
-            if (this.txt.includes('\n')) {
-                displayText = this.txt.replace(/\n/g, '<br>');
-            }
-            
-            // Safely update the element
+            // Safely update the element with cursor at the end of text
             try {
                 if (this.txtElement && this.txtElement.isConnected) {
-                    this.txtElement.innerHTML = `<span class="wrap">${displayText}</span>`;
-                    this.adjustTextSize();
+                    // Create the text with cursor
+                    this.txtElement.innerHTML = `
+                        <span class="wrap">
+                            <span class="text text-gradient">${this.txt}</span>
+                            <span class="cursor"></span>
+                        </span>
+                    `;
+                    
+                    // Determine typing speed
+                    let typeSpeed = this.isDeleting ? 50 : 100; // 20 chars/sec deleting, 10 chars/sec typing
+
+                    // If word is complete
+                    if (!this.isDeleting && this.txt === fullTxt) {
+                        typeSpeed = this.wait; // Pause at end
+                        this.isDeleting = true;
+                    } else if (this.isDeleting && this.txt === '') {
+                        this.isDeleting = false;
+                        this.wordIndex++;
+                        typeSpeed = 500; // Pause before new word
+                    }
+                    
+                    // Schedule next frame
+                    this.animationFrame = setTimeout(() => this.type(), typeSpeed);
+
                 } else {
                     this.cleanup();
-                    return;
                 }
             } catch (e) {
                 console.error('Error updating text element:', e);
-                this.cleanup();
-                return;
-            }
-
-            // Calculate typing speed
-            let typeSpeed = this.isDeleting ? 50 : 100;
-
-            // Handle word completion and direction
-            if (!this.isDeleting && this.txt === fullTxt) {
-                // Pause at end of word before deleting
-                typeSpeed = this.wait;
-                this.isDeleting = true;
-            } else if (this.isDeleting && this.txt === '') {
-                this.isDeleting = false;
-                this.wordIndex++;
-                typeSpeed = 500; // Pause before starting next word
-            }
-
-            // Schedule next update
-            try {
-                this.animationFrame = setTimeout(() => {
-                    if (this.isActive && this.txtElement && this.txtElement.isConnected) {
-                        this.type();
-                    } else {
-                        this.cleanup();
-                    }
-                }, typeSpeed);
-            } catch (e) {
-                console.error('Error scheduling next animation frame:', e);
                 this.cleanup();
             }
             
