@@ -720,26 +720,31 @@ section:not(.dark) .scroll-indicator:hover {
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -100% 0;
+  0%, 100% {
+    background-position: 0% 50%;
   }
-  100% {
-    background-position: 200% 0;
+  50% {
+    background-position: 100% 50%;
   }
 }
 
 .text-gradient {
   position: relative;
   display: inline-block;
-  background: linear-gradient(90deg, #4F46E5, #7C3AED, #EC4899, #F59E0B, #10B981);
+  background: linear-gradient(
+    90deg, 
+    #4F46E5, #7C3AED, #EC4899, #F59E0B, #10B981,
+    #4F46E5, #7C3AED, #EC4899, #F59E0B, #10B981
+  );
   background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
-  animation: breath 4s ease-in-out infinite, shimmer 8s linear infinite;
+  animation: breath 4s ease-in-out infinite, shimmer 12s ease-in-out infinite;
   transition: all 0.3s ease;
   z-index: 1;
+  animation-fill-mode: both;
 }
 
 /* Remove the external glow effect */
