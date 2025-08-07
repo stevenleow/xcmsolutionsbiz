@@ -283,3 +283,47 @@ function initTypeWriter() {
         console.error('Unexpected error in initTypeWriter:', e);
     }
 }
+
+// Initialize Services Carousel
+function initServicesCarousel() {
+    try {
+        console.log('Initializing Services Carousel...');
+        new Swiper('.services-carousel', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    } catch (e) {
+        console.error('Error initializing services carousel:', e);
+    }
+}
+
+// Main initialization call
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('XCM Solutions website loaded - Starting initialization...');
+    
+    try {
+        initTypeWriter();
+        initServicesCarousel();
+        console.log('XCM Solutions website initialized');
+    } catch (error) {
+        console.error('Error during initialization:', error);
+    }
+});

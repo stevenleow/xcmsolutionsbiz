@@ -15,6 +15,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
     <script>
@@ -104,38 +107,51 @@
                 <h2 class="main-title"><span class="text-gradient">Comprehensive</span> IT Solutions</h2>
                 <p class="main-subtitle">Customized technology services designed to meet your business needs and drive growth.</p>
             </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-headset"></i></div>
-                    <h3>IT Support & Maintenance</h3>
-                    <p>Reliable 24/7 technical support and proactive maintenance to ensure your systems run smoothly.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> 24/7 Helpdesk Support</li>
-                        <li><i class="fas fa-check"></i> Remote & On-site Assistance</li>
-                        <li><i class="fas fa-check"></i> System Monitoring</li>
-                    </ul>
+            <!-- Swiper -->
+            <div class="swiper-container services-carousel">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fas fa-headset"></i></div>
+                            <h3>IT Support & Maintenance</h3>
+                            <p>Reliable 24/7 technical support and proactive maintenance to ensure your systems run smoothly and efficiently.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                            <h3>Cloud Solutions & Migration</h3>
+                            <p>Secure and scalable cloud solutions, including seamless migration, management, and cost optimization.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                            <h3>Cybersecurity Services</h3>
+                            <p>Comprehensive security solutions to protect your business from evolving cyber threats and ensure data integrity.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fas fa-network-wired"></i></div>
+                            <h3>Network Infrastructure</h3>
+                            <p>Designing and managing robust network infrastructures for optimal performance, reliability, and scalability.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fas fa-business-time"></i></div>
+                            <h3>Business Continuity Planning</h3>
+                            <p>Strategic planning and disaster recovery solutions to keep your business operational through any disruption.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-                    <h3>Cloud Services</h3>
-                    <p>Secure and scalable cloud solutions including migration, management, and optimization.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Cloud Migration</li>
-                        <li><i class="fas fa-check"></i> Multi-Cloud Strategy</li>
-                        <li><i class="fas fa-check"></i> Cost Optimization</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>Cybersecurity</h3>
-                    <p>Comprehensive security solutions to protect your business from evolving cyber threats.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Security Audits</li>
-                        <li><i class="fas fa-check"></i> Threat Protection</li>
-                        <li><i class="fas fa-check"></i> Compliance</li>
-                    </ul>
-                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
             </div>
+            <!-- Add Navigation -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
         </div>
         <a href="#pricing" class="scroll-indicator">
             Scroll to Explore
@@ -382,6 +398,9 @@
 
     <!-- Particles.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <!-- Swiper.js JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     
     <!-- Scripts -->
     <script src="js/main.js"></script>
