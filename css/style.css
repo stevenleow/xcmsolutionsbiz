@@ -510,7 +510,7 @@ section:not(.dark) .scroll-indicator:hover {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--secondary));
+    background: linear-gradient(135deg, var(--primary-light), var(--secondary));
     color: var(--white);
     display: flex;
     align-items: center;
