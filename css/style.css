@@ -562,11 +562,12 @@ section:not(.dark) .scroll-indicator:hover {
     text-align: center;
     border: 1px solid var(--border);
     transition: var(--transition);
-    aspect-ratio: 3 / 4;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-height: 40vh;
+    width: 300px;
+    height: 400px;
 }
 
 .service-card:hover {
@@ -617,16 +618,15 @@ section:not(.dark) .scroll-indicator:hover {
 
 .services-carousel .swiper-slide {
     transition: transform 0.4s ease, opacity 0.4s ease;
-    opacity: 0.5;
-    transform: scale(0.85);
+    /* Swiper.js coverflow effect will handle opacity and transform */
+    width: 300px; /* Ensure slides are exactly 300px wide */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .services-carousel .swiper-slide-active {
-    opacity: 1;
-    transform: scale(1);
+    /* Swiper.js coverflow effect will handle opacity and transform */
 }
 
 .swiper-button-next,

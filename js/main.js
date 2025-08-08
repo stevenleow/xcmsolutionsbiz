@@ -292,13 +292,25 @@ function initServicesCarousel() {
             effect: 'coverflow',
             grabCursor: true,
             centeredSlides: true,
-            slidesPerView: 'auto',
+            slidesPerView: 1, // Default for < 300px
+            spaceBetween: 10,
             coverflowEffect: {
-                rotate: 50,
-                stretch: 0,
+                rotate: 30,
+                stretch: 50,
                 depth: 100,
                 modifier: 1,
                 slideShadows: true,
+                scale: 0.7,
+            },
+            breakpoints: {
+                300: { // For screen size > 300px and < 600px
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                },
+                900: { // For screen size > 900px
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
             },
             loop: true,
             pagination: {
