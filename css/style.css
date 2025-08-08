@@ -641,56 +641,176 @@ section:not(.dark) .scroll-indicator:hover {
 }
 
 /* =======================================
-   Pricing Section
+   Process Section (Vertical Timeline)
    ======================================= */
 
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    align-items: stretch;
+.process {
+    background-color: var(--light-bg);
+    /* Revert to default min-height and adjust padding to make the section more compact */
+    padding: 3rem 0;
 }
 
-.pricing-card {
-    background: var(--white);
+.process .section-header {
+    margin-bottom: 2rem; /* Reduce space below the header */
+}
+
+.process-timeline {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 1rem auto; /* Reduce vertical margin */
+}
+
+/* The central timeline bar */
+.process-timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: var(--primary);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+    border-radius: 2px;
+}
+
+.timeline-item {
+    padding: 0.5rem 2.5rem; /* Reduce vertical padding */
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+}
+
+/* The content box */
+.timeline-content {
+    padding: 1rem 1.5rem; /* Reduce content padding */
+    background-color: white;
+    position: relative;
     border-radius: var(--border-radius-lg);
-    padding: 2.5rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border);
+    transition: var(--transition);
+}
+.timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Position items to the left */
+.timeline-item:nth-child(odd) {
+    left: 0;
+    padding-right: 40px; /* Space for the icon */
+}
+
+/* Position items to the right */
+.timeline-item:nth-child(even) {
+    left: 50%;
+    padding-left: 40px; /* Space for the icon */
+}
+
+/* Arrow pointing to the timeline */
+.timeline-item:nth-child(odd) .timeline-content::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    right: -10px;
+    border: medium solid white;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent white;
+}
+
+.timeline-item:nth-child(even) .timeline-content::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    left: -10px;
+    border: medium solid white;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent white transparent transparent;
+}
+
+/* The timeline icon */
+.timeline-icon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    right: -25px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    z-index: 1;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.5rem;
+    border: 3px solid var(--light-bg);
 }
 
-.pricing-card.featured {
-    border: 2px solid var(--accent);
-    transform: scale(1.05);
+.timeline-item:nth-child(even) .timeline-icon {
+    left: -25px;
 }
 
-.pricing-header .amount {
-    font-size: 3rem;
-    font-weight: 700;
+.timeline-title {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.process-footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem; /* Reduce padding */
+    background: var(--light-bg);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border);
+}
+
+.process-footer p {
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    color: var(--text);
+}
+
+.process-footer strong {
     color: var(--primary);
 }
 
-.pricing-features {
-    margin: 2rem 0;
-    flex-grow: 1;
-}
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .process-timeline::after {
+        left: 31px;
+    }
 
-.pricing-features ul {
-    list-style: none;
-}
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
 
-.pricing-features li {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        left: 0;
+        padding-left: 60px; /* Space for the icon */
+    }
 
-.pricing-features li i { color: var(--accent); }
-.pricing-features li.not-included { opacity: 0.5; text-decoration: line-through; }
+    .timeline-icon {
+        left: 15px;
+    }
+    
+    .timeline-item:nth-child(even) .timeline-content::before,
+    .timeline-item:nth-child(odd) .timeline-content::before {
+        left: -10px;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent white transparent transparent;
+    }
+}
 
 /* =======================================
    About Section
@@ -933,7 +1053,7 @@ section::before {
 .hero::before { border-color: rgba(255, 99, 71, 0.5); } /* Tomato */
 .features::before { border-color: rgba(75, 192, 192, 0.5); } /* Teal */
 .services::before { border-color: rgba(153, 102, 255, 0.5); } /* Purple */
-.pricing::before { border-color: rgba(255, 159, 64, 0.5); } /* Orange */
+.process::before { border-color: rgba(255, 159, 64, 0.5); } /* Orange */
 .about::before { border-color: rgba(54, 162, 235, 0.5); } /* Blue */
 .contact::before { border-color: rgba(255, 206, 86, 0.5); } /* Yellow */
 .cta::before { border-color: rgba(255, 99, 132, 0.5); } /* Pink */
