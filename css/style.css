@@ -669,7 +669,7 @@ section:not(.dark) .scroll-indicator:hover {
     width: 4px;
     background-color: var(--primary);
     top: 0;
-    bottom: 0;
+    bottom: calc(8rem + 120px); /* Shortened by another 10px */
     left: 50%;
     margin-left: -2px;
     border-radius: 2px;
@@ -784,6 +784,8 @@ section:not(.dark) .scroll-indicator:hover {
     background: var(--light-bg);
     border-radius: var(--border-radius);
     border: 1px solid var(--border);
+    position: relative;
+    bottom: 150px;
 }
 
 .process-footer p {
