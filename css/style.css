@@ -659,6 +659,7 @@ section:not(.dark) .scroll-indicator:hover {
     width: 100%;
     max-width: 800px;
     margin: 1rem auto; /* Reduce vertical margin */
+    padding-bottom: 4rem; /* Add space for the staggered items */
 }
 
 /* The central timeline bar */
@@ -675,7 +676,7 @@ section:not(.dark) .scroll-indicator:hover {
 }
 
 .timeline-item {
-    padding: 0.5rem 2.5rem; /* Reduce vertical padding */
+    padding: 0.2rem 2.5rem; /* Reduce vertical padding to bring items closer */
     position: relative;
     background-color: inherit;
     width: 50%;
@@ -696,6 +697,10 @@ section:not(.dark) .scroll-indicator:hover {
     box-shadow: var(--shadow-lg);
 }
 
+.timeline-content p {
+    margin-bottom: 0; /* Remove paragraph bottom margin */
+}
+
 /* Position items to the left */
 .timeline-item:nth-child(odd) {
     left: 0;
@@ -706,6 +711,15 @@ section:not(.dark) .scroll-indicator:hover {
 .timeline-item:nth-child(even) {
     left: 50%;
     padding-left: 40px; /* Space for the icon */
+    top: calc(4rem - 150px); /* Staggered and moved up by another 50px */
+}
+
+/* Adjust specific items */
+.timeline-item:nth-child(3) {
+    top: -100px;
+}
+.timeline-item:nth-child(4) {
+    top: calc(4rem - 250px); /* Adjusted up by another 100px */
 }
 
 /* Arrow pointing to the timeline */
