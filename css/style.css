@@ -865,6 +865,16 @@ section:not(.dark) .scroll-indicator:hover {
 .contact {
     background-color: var(--dark-bg);
     color: var(--text-on-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contact .container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .contact .section-header h2,
@@ -887,9 +897,21 @@ section:not(.dark) .scroll-indicator:hover {
     padding: 3rem;
 }
 
+.form-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.form-header p {
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0;
+}
+
 .form-title {
     color: var(--white);
     margin-bottom: 2rem;
+    text-align: center;
 }
 
 .contact-form-container .form-group {
