@@ -412,31 +412,31 @@ section:not(.dark) .scroll-indicator:hover {
    Features Section
    ======================================= */
 
-.features {
+.advantage {
     background-color: var(--dark-bg);
     color: var(--text-on-dark);
 }
 
-.features .main-grid {
+.advantage .main-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
 }
 
-.features .main-title {
+.advantage .main-title {
     color: var(--white);
     font-size: 2.8rem;
     line-height: 1.2;
 }
 
-.features .main-subtitle {
+.advantage .main-subtitle {
     color: rgba(255, 255, 255, 0.85);
     font-size: 1.1rem;
     margin-bottom: 2rem;
 }
 
-.features .benefit-item {
+.advantage .benefit-item {
     background: var(--dark-card);
     border: 1px solid var(--dark-border);
     border-radius: var(--border-radius-lg);
@@ -448,12 +448,12 @@ section:not(.dark) .scroll-indicator:hover {
     margin-bottom: 1rem;
 }
 
-.features .benefit-item:hover {
+.advantage .benefit-item:hover {
     background: var(--dark-hover);
     transform: translateY(-3px);
 }
 
-.features .benefit-icon {
+.advantage .benefit-icon {
     background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
     width: 44px;
     height: 44px;
@@ -466,18 +466,18 @@ section:not(.dark) .scroll-indicator:hover {
     color: var(--white);
 }
 
-.features .benefit-content h4 {
+.advantage .benefit-content h4 {
     color: var(--white);
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
 }
 
-.features .benefit-content p {
+.advantage .benefit-content p {
     color: rgba(255, 255, 255, 0.8);
     margin: 0;
 }
 
-.features .main-illustration {
+.advantage .main-illustration {
     width: 100%;
     height: auto;
     border-radius: var(--border-radius-lg);
@@ -876,7 +876,7 @@ section:not(.dark) .scroll-indicator:hover {
    Contact Section
    ======================================= */
 
-.contact {
+.cta {
     background-color: var(--dark-bg);
     color: var(--text-on-dark);
     display: flex;
@@ -884,15 +884,15 @@ section:not(.dark) .scroll-indicator:hover {
     justify-content: center;
 }
 
-.contact .container {
+.cta .container {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.contact .section-header h2,
-.contact .section-header .section-subtitle {
+.cta .section-header h2,
+.cta .section-header .section-subtitle {
     color: var(--white);
 }
 
@@ -1123,9 +1123,9 @@ section:not(.dark) .scroll-indicator:hover {
    ======================================= */
 
 @media (max-width: 992px) {
-    .features .main-grid,
+    .advantage .main-grid,
     .about-grid,
-    .contact-grid {
+    .cta-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -1194,9 +1194,9 @@ section::before {
 }
 
 .hero::before { border-color: rgba(255, 99, 71, 0.5); } /* Tomato */
-.features::before { border-color: rgba(75, 192, 192, 0.5); } /* Teal */
+.advantage::before { border-color: rgba(75, 192, 192, 0.5); } /* Teal */
 .services::before { border-color: rgba(153, 102, 255, 0.5); } /* Purple */
 .process::before { border-color: rgba(255, 159, 64, 0.5); } /* Orange */
 .about::before { border-color: rgba(54, 162, 235, 0.5); } /* Blue */
-.contact::before { border-color: transparent; } /* Yellow */
+.cta::before { border-color: transparent; } /* Yellow */
 .cta::before { border-color: transparent; } /* Pink */
