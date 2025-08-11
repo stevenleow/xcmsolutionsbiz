@@ -916,6 +916,9 @@ section:not(.dark) .scroll-indicator:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-height: 100vh;
+    padding: 2rem 0;
+    box-sizing: border-box;
 }
 
 .cta .container {
@@ -939,6 +942,7 @@ section:not(.dark) .scroll-indicator:hover {
     border-radius: var(--border-radius-lg);
     border: 1px solid var(--dark-border);
     overflow: hidden;
+    margin-top: 100px;
 }
 
 .contact-form-container {
