@@ -189,9 +189,11 @@ a:hover { color: var(--primary); }
    Section Header
    ======================================= */
 
-.section-header {
+.process .section-header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin: 100px 0 2rem;
+    position: relative;
+    z-index: 1;
 }
 
 .section-tag {
@@ -660,8 +662,18 @@ section:not(.dark) .scroll-indicator:hover {
 
 .process {
     background-color: var(--light-bg);
-    /* Revert to default min-height and adjust padding to make the section more compact */
-    padding: 3rem 0;
+    min-height: 100vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.process > .container {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .process .section-header {
@@ -672,8 +684,10 @@ section:not(.dark) .scroll-indicator:hover {
     position: relative;
     width: 100%;
     max-width: 800px;
-    margin: 1rem auto; /* Reduce vertical margin */
-    padding-bottom: 4rem; /* Add space for the staggered items */
+    margin: 0 auto; /* Remove vertical margin */
+    padding-bottom: 0; /* Remove bottom padding */
+    margin-bottom: -150px; /* Pull up the container to match the shortened line */
+    min-height: 0; /* Allow the container to shrink */
 }
 
 /* The central timeline bar */
@@ -683,7 +697,7 @@ section:not(.dark) .scroll-indicator:hover {
     width: 4px;
     background-color: var(--primary);
     top: 0;
-    bottom: calc(8rem + 120px); /* Shortened by another 10px */
+    bottom: 200px; /* Shorten the line by 200px from bottom */
     left: 50%;
     margin-left: -2px;
     border-radius: 2px;
@@ -793,13 +807,13 @@ section:not(.dark) .scroll-indicator:hover {
 
 .process-footer {
     text-align: center;
-    margin-top: 2rem;
-    padding: 1rem; /* Reduce padding */
+    margin: 0 auto;
+    padding: 1rem;
     background: var(--light-bg);
     border-radius: var(--border-radius);
     border: 1px solid var(--border);
-    position: relative;
-    bottom: 150px;
+    max-width: 800px;
+    width: calc(100% - 3rem);
 }
 
 .process-footer p {
