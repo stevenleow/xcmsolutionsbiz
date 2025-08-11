@@ -1070,16 +1070,29 @@ section:not(.dark) .scroll-indicator:hover {
 
 .footer a {
     color: rgba(255, 255, 255, 0.7);
-    display: inline-block;
-    margin-bottom: 0.5rem;
+    transition: var(--transition);
 }
+
 .footer a:hover {
     color: var(--white);
 }
 
-.footer .social-links a {
+.footer-links ul, .footer-services ul {
+    padding: 0;
+}
+
+.footer-links a, .footer-services a {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.footer-contact .social-links {
+    margin-top: 1.5rem;
+}
+
+.footer-contact .social-links a {
     margin-right: 1rem;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }
 
 .footer-bottom {
