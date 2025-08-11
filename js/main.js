@@ -8,11 +8,39 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize TypeWriter functionality
         initTypeWriter();
         
+        // Initialize back to top button
+        initBackToTop();
+        
         console.log('XCM Solutions website initialized');
     } catch (error) {
         console.error('Error during initialization:', error);
     }
 });
+
+// Back to Top Functionality
+function initBackToTop() {
+    const backToTopButton = document.querySelector('.back-to-top');
+    
+    if (!backToTopButton) return;
+    
+    // Show/hide button on scroll
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+    });
+    
+    // Smooth scroll to top when clicked
+    backToTopButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
 
 // TypeWriter Class
 class TypeWriter {
