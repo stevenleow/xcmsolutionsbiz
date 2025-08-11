@@ -874,12 +874,14 @@ section:not(.dark) .scroll-indicator:hover {
 
 .contact-grid-new {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 3rem;
     background: var(--dark-card);
     padding: 3rem;
     border-radius: var(--border-radius-lg);
     border: 1px solid var(--dark-border);
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .contact-form-container .form-group {
