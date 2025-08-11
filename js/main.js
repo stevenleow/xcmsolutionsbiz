@@ -285,34 +285,37 @@ function initTypeWriter() {
 }
 
 // Initialize Services Carousel
+let servicesSwiper;
 function initServicesCarousel() {
     try {
         console.log('Initializing Services Carousel...');
-        new Swiper('.services-carousel', {
+        servicesSwiper = new Swiper('.services-carousel', {
             effect: 'coverflow',
             grabCursor: true,
             centeredSlides: true,
-            slidesPerView: 1, // Default for < 300px
-            spaceBetween: 10,
+            slidesPerView: 'auto', // This makes sure slides don't get squished
+            initialSlide: 0,
             coverflowEffect: {
                 rotate: 30,
                 stretch: 50,
                 depth: 100,
                 modifier: 1,
                 slideShadows: true,
-                scale: 0.7,
+                scale: 0.8,
             },
             breakpoints: {
-                300: { // For screen size > 300px and < 600px
-                    slidesPerView: 3,
+                300: {
+                    slidesPerView: 'auto',
                     spaceBetween: 20,
                 },
-                900: { // For screen size > 900px
-                    slidesPerView: 3,
+                900: {
+                    slidesPerView: 'auto',
                     spaceBetween: 30,
                 },
             },
+            centeredSlides: true,
             loop: true,
+            loopedSlides: 5, // Should match the number of slides
             pagination: {
                 el: '.swiper-pagination',
                 clickable: true,
@@ -321,11 +324,49 @@ function initServicesCarousel() {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
+            on: {
+                init: function() {
+                    // Force update after initialization to ensure proper rendering
+                    setTimeout(() => this.update(), 100);
+                },
+            },
         });
     } catch (e) {
         console.error('Error initializing services carousel:', e);
     }
 }
+
+// Handle service card navigation from footer
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('service-link') || e.target.closest('.service-link')) {
+        e.preventDefault();
+        const link = e.target.classList.contains('service-link') ? e.target : e.target.closest('.service-link');
+        const serviceIndex = parseInt(link.getAttribute('data-service'));
+        
+        if (!isNaN(serviceIndex) && servicesSwiper) {
+            const servicesSection = document.querySelector('#services');
+            
+            // First, show the services section
+            servicesSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Calculate the correct slide index considering loop
+            const slides = document.querySelectorAll('.swiper-slide');
+            const realIndex = serviceIndex % servicesSwiper.slides.length;
+            
+            // Wait for scroll to complete
+            setTimeout(() => {
+                // Force update the swiper
+                servicesSwiper.update();
+                
+                // Slide to the specific service with animation
+                servicesSwiper.slideToLoop(realIndex, 800, false);
+                
+                // Force update after animation completes
+                setTimeout(() => servicesSwiper.update(), 850);
+            }, 100);
+        }
+    }
+});
 
 // Main initialization call
 document.addEventListener('DOMContentLoaded', function() {
