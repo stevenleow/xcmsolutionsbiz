@@ -426,10 +426,25 @@ section:not(.dark) .scroll-indicator:hover {
     align-items: center;
 }
 
-.advantage .main-title {
-    color: var(--white);
+/* Standardized main-title styles for all sections */
+.main-title {
     font-size: 2.8rem;
     line-height: 1.2;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+/* Specific section overrides */
+.advantage .main-title {
+    color: var(--white);
+}
+
+/* Ensure consistent color for other sections */
+.hero .main-title,
+.solutions .main-title,
+.process .main-title,
+.cta .main-title {
+    color: var(--heading-color);
 }
 
 .advantage .main-subtitle {
@@ -547,16 +562,21 @@ section:not(.dark) .scroll-indicator:hover {
 
 .services {
     background-color: var(--light-bg);
+    padding: 6rem 0;
 }
 
 .services .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    flex-grow: 1;
     width: 100%;
-    max-width: 100%;
-    padding: 0 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.services .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
 }
 
 .service-card {
