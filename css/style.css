@@ -863,69 +863,127 @@ section:not(.dark) .scroll-indicator:hover {
    ======================================= */
 
 .contact {
-    background-color: var(--light-bg);
+    background-color: var(--dark-bg);
+    color: var(--text-on-dark);
 }
 
-.contact-grid {
+.contact .section-header h2,
+.contact .section-header .section-subtitle {
+    color: var(--white);
+}
+
+.contact-grid-new {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
-    background: var(--white);
+    background: var(--dark-card);
     padding: 3rem;
     border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--dark-border);
 }
 
-.form-group {
+.contact-form-container .form-group {
     position: relative;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
-.form-group input,
-.form-group textarea {
+.contact-form-container .form-group input,
+.contact-form-container .form-group textarea {
     width: 100%;
-    padding: 0.75rem 0;
-    border: none;
-    border-bottom: 2px solid var(--border);
-    background: transparent;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    background: var(--dark-hover);
+    border: 1px solid var(--dark-border);
+    color: var(--white);
     font-size: 1rem;
     transition: var(--transition);
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-bottom-color: var(--primary);
+.contact-form-container .form-group textarea {
+    min-height: 120px;
+    resize: vertical;
 }
 
-.form-group label {
+.contact-form-container .form-group input:focus,
+.contact-form-container .form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--dark-card);
+}
+
+.contact-form-container .form-group label {
     position: absolute;
-    top: 0.75rem;
-    left: 0;
+    top: 1rem;
+    left: 1rem;
     color: var(--text-light);
     transition: var(--transition);
     pointer-events: none;
+    background-color: var(--dark-hover);
+    padding: 0 0.25rem;
 }
 
-.form-group input:focus + label,
-.form-group input:valid + label,
-.form-group textarea:focus + label,
-.form-group textarea:valid + label {
-    top: -1rem;
+.contact-form-container .form-group input:focus + label,
+.contact-form-container .form-group input:valid + label,
+.contact-form-container .form-group textarea:focus + label,
+.contact-form-container .form-group textarea:valid + label {
+    top: -1.5rem;
+    left: 0.75rem;
     font-size: 0.875rem;
-    color: var(--primary);
-}
-
-.contact-info-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.contact-icon {
-    font-size: 1.5rem;
     color: var(--accent);
+}
+
+.contact-info-new {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.contact-socials h4 {
+    color: var(--white);
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.contact-socials p {
+    color: var(--text-on-dark);
+    margin-bottom: 1.5rem;
+}
+
+.contact-socials .social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.contact-socials .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--dark-hover);
+    color: var(--white);
+    font-size: 1.25rem;
+    transition: var(--transition);
+    border: 1px solid var(--dark-border);
+}
+
+.contact-socials .social-icon:hover {
+    background: var(--accent);
+    color: var(--white);
+    transform: translateY(-3px);
+    border-color: var(--accent);
+}
+
+@media (max-width: 992px) {
+    .contact-grid-new {
+        grid-template-columns: 1fr;
+    }
+    .contact-info-new {
+        align-items: center;
+        text-align: center;
+    }
 }
 
 /* =======================================
@@ -1071,5 +1129,5 @@ section::before {
 .services::before { border-color: rgba(153, 102, 255, 0.5); } /* Purple */
 .process::before { border-color: rgba(255, 159, 64, 0.5); } /* Orange */
 .about::before { border-color: rgba(54, 162, 235, 0.5); } /* Blue */
-.contact::before { border-color: rgba(255, 206, 86, 0.5); } /* Yellow */
-.cta::before { border-color: rgba(255, 99, 132, 0.5); } /* Pink */
+.contact::before { border-color: transparent; } /* Yellow */
+.cta::before { border-color: transparent; } /* Pink */
