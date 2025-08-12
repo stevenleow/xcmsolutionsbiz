@@ -437,6 +437,7 @@ section:not(.dark) .scroll-indicator:hover {
 /* Specific section overrides */
 .advantage .main-title {
     color: var(--white);
+    text-align: center;
 }
 
 /* Ensure consistent color for other sections */
