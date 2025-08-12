@@ -1152,6 +1152,10 @@ section:not(.dark) .scroll-indicator:hover {
     margin-top: 5px;
 }
 
+.value-prop-text {
+    text-align: left;
+}
+
 .value-prop-text h4 {
     color: var(--white);
     margin-bottom: 0.5rem;
