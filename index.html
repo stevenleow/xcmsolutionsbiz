@@ -20,10 +20,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <script>
-        console.log('HTML is being processed');
-        console.log('CSS file path:', new URL('css/style.css', window.location.href).href);
-    </script>
+    
 </head>
 <body>
     
@@ -34,7 +31,7 @@
             <div class="hero-content">
                 <h1 class="hero-title">
                     <span class="hero-title-line">Empowering Your Business with</span>
-                    <span class="typing-text" data-wait="3000" data-words='["Innovative IT Solutions", "Cutting-Edge Technology", "Reliable Support"]'></span>
+                    <span id="typing-text" class="typing-text" data-wait="3000"></span>
                 </h1>
                 <p class="hero-subtitle">Your trusted partner for comprehensive IT support, cloud services, and cybersecurity.</p>
                 <a href="#cta" class="btn btn-primary btn-lg">Get Free Consultation</a>

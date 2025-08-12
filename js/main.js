@@ -1,8 +1,8 @@
-console.log('--- SCRIPT UPDATE CHECK: VERSION 3 ---')
+
 
 // Main JavaScript for XCM Solutions Website
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('XCM Solutions website loaded - Starting initialization...');
+    
     
     try {
         // Initialize TypeWriter functionality
@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize back to top button
         initBackToTop();
         
-        console.log('XCM Solutions website initialized');
+        
     } catch (error) {
-        console.error('Error during initialization:', error);
+        
     }
 });
 
@@ -59,7 +59,7 @@ class TypeWriter {
             
             // Validate element is in the DOM
             if (!document.body.contains(txtElement)) {
-                console.warn('TypeWriter element is not in the DOM');
+                
                 return;
             }
             
@@ -106,13 +106,13 @@ class TypeWriter {
                 }, 100);
                 
             } catch (e) {
-                console.error('Error during TypeWriter initialization:', e);
+                ('Error during TypeWriter initialization:', e);
                 this.cleanup();
                 throw e; // Re-throw to be caught by the outer try-catch
             }
             
         } catch (e) {
-            console.error('Failed to initialize TypeWriter:', e);
+            ('Failed to initialize TypeWriter:', e);
             this.cleanup();
         }
     }
@@ -124,7 +124,7 @@ class TypeWriter {
             // Recalculate layout on window resize
             this.adjustTextSize();
         } catch (e) {
-            console.warn('Error in handleResize:', e);
+            ('Error in handleResize:', e);
         }
     }
     
@@ -150,7 +150,7 @@ class TypeWriter {
                 text.style.fontSize = `${newSize}px`;
             }
         } catch (e) {
-            console.warn('Error in adjustTextSize:', e);
+            ('Error in adjustTextSize:', e);
         }
     }
 
@@ -203,12 +203,12 @@ class TypeWriter {
                     this.cleanup();
                 }
             } catch (e) {
-                console.error('Error updating text element:', e);
+                ('Error updating text element:', e);
                 this.cleanup();
             }
             
         } catch (e) {
-            console.error('Error in TypeWriter animation:', e);
+            ('Error in TypeWriter animation:', e);
             this.cleanup();
         }
     }
@@ -228,7 +228,7 @@ class TypeWriter {
                 try {
                     window.removeEventListener('resize', this.handleResize);
                 } catch (e) {
-                    console.warn('Error removing resize listener:', e);
+                    ('Error removing resize listener:', e);
                 }
             }
             
@@ -239,7 +239,7 @@ class TypeWriter {
                     this.txtElement.style.visibility = '';
                     this.txtElement.style.opacity = '';
                 } catch (e) {
-                    console.warn('Error cleaning up text element:', e);
+                    ('Error cleaning up text element:', e);
                 }
                 this.txtElement = null;
             }
@@ -249,7 +249,7 @@ class TypeWriter {
             this.txt = '';
             
         } catch (e) {
-            console.error('Error during TypeWriter cleanup:', e);
+            ('Error during TypeWriter cleanup:', e);
         } finally {
             // Ensure we don't leak memory
             this.animationFrame = null;
@@ -267,48 +267,21 @@ class TypeWriter {
 // Initialize TypeWriter Effect
 function initTypeWriter() {
     try {
-        console.log('Initializing TypeWriter effect...');
+        const txtElement = document.querySelector('#typing-text');
+        const words = [
+            "ROI-Focused Solutions",
+            "Business-Optimized Technology",
+            "Dependable Infrastructure",
+            "Intelligent Automation",
+            "Comprehensive End-to-End Support"
+        ];
+        const wait = txtElement.getAttribute('data-wait');
         
-        const txtElement = document.querySelector('.typing-text');
-        if (!txtElement) {
-            console.warn('TypeWriter element (.typing-text) not found in the document');
-            return;
+        if (txtElement) {
+            new TypeWriter(txtElement, words, wait);
         }
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    console.log('TypeWriter element is in view. Starting animation.');
-                    const wordsAttr = txtElement.getAttribute('data-words');
-                    const waitAttr = txtElement.getAttribute('data-wait') || '3000';
-                    
-                    if (!wordsAttr) {
-                        console.warn('TypeWriter: Missing required data-words attribute');
-                        return;
-                    }
-                    
-                    let words;
-                    try {
-                        words = JSON.parse(wordsAttr);
-                    } catch (e) {
-                        console.error('TypeWriter: Failed to parse data-words attribute as JSON:', e);
-                        return;
-                    }
-                    
-                    const wait = Math.max(parseInt(waitAttr, 10) || 3000, 1000);
-                    
-                    window.currentTypeWriter = new TypeWriter(txtElement, words, wait);
-                    
-                    // Stop observing once initialized
-                    observer.unobserve(txtElement);
-                }
-            });
-        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
-
-        observer.observe(txtElement);
-        
     } catch (e) {
-        console.error('Unexpected error in initTypeWriter:', e);
+        ('Error initializing TypeWriter:', e);
     }
 }
 
@@ -316,7 +289,6 @@ function initTypeWriter() {
 let servicesSwiper;
 function initServicesCarousel() {
     try {
-        console.log('Initializing Services Carousel...');
         servicesSwiper = new Swiper('.services-carousel', {
             effect: 'coverflow',
             grabCursor: true,
@@ -360,7 +332,7 @@ function initServicesCarousel() {
             },
         });
     } catch (e) {
-        console.error('Error initializing services carousel:', e);
+        ('Error initializing services carousel:', e);
     }
 }
 
@@ -398,13 +370,13 @@ document.addEventListener('click', function(e) {
 
 // Main initialization call
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('XCM Solutions website loaded - Starting initialization...');
+    
     
     try {
         initTypeWriter();
         initServicesCarousel();
-        console.log('XCM Solutions website initialized');
+        
     } catch (error) {
-        console.error('Error during initialization:', error);
+        
     }
 });
