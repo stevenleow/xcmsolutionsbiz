@@ -1,5 +1,7 @@
 
 
+
+
 // Main JavaScript for XCM Solutions Website
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -11,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize back to top button
         initBackToTop();
         
+        // Initialize timeline animation
+        initTimelineAnimation();
         
     } catch (error) {
         
@@ -368,6 +372,33 @@ document.addEventListener('click', function(e) {
     }
 });
 
+// Initialize Timeline Animation
+function initTimelineAnimation() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    if (timelineItems.length === 0) return;
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Add a delay based on the item's index to stagger the animation
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 200); // 200ms delay between each item
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1, // Trigger when 10% of the item is visible
+        rootMargin: '0px 0px -50px 0px' // Trigger a little before it's fully in view
+    });
+
+    timelineItems.forEach(item => {
+        observer.observe(item);
+    });
+}
+
+
 // Main initialization call
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -375,6 +406,7 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
         initTypeWriter();
         initServicesCarousel();
+        initTimelineAnimation();
         
     } catch (error) {
         
