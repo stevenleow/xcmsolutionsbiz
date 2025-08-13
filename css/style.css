@@ -4,18 +4,18 @@
 
 :root {
     /* Theme Colors */
-    --primary: #0F2B5B;
-    --primary-dark: #0A1D3D;
-    --primary-light: #1A3A6E;
-    --secondary: #2E8B94;
-    --accent: #FF6B4A;
+    --primary: #2A4A7C;         /* Deep Blue for trust */
+    --primary-dark: #1E3A63;     /* Darker shade of primary */
+    --primary-light: #3B5B95;    /* Lighter shade of primary */
+    --secondary: #3DA9A2;       /* Calming Teal for safety/clarity */
+    --accent: #FF7A59;          /* Vibrant Orange for energy/CTA */
     --white: #FFFFFF;
     --text: #333F48;
     --text-light: #6C757D;
     --text-on-dark: #F8F9FA;
-    --light-bg: #f9fafb;
+    --light-bg: #F8F9FA;        /* Soft Off-White */
     --border: #e5e7eb;
-    --dark-bg: #0A1D3D;
+    --dark-bg: #1A202C;         /* Dark Charcoal Blue */
     --dark-card: rgba(255, 255, 255, 0.05);
     --dark-border: rgba(255, 255, 255, 0.1);
     --dark-hover: rgba(255, 255, 255, 0.08);
@@ -221,14 +221,20 @@ a:hover { color: var(--primary); }
 }
 
 /* Dark background variant for section headers */
-.dark .section-tag {
+.hero .section-tag,
+.advantage .section-tag,
+.cta .section-tag {
     background: var(--dark-card);
     border: 1px solid var(--dark-border);
     color: var(--accent);
 }
 
-.dark .section-header h2,
-.dark .section-header .section-subtitle {
+.hero .section-header h2,
+.hero .section-header .section-subtitle,
+.advantage .section-header h2,
+.advantage .section-header .section-subtitle,
+.cta .section-header h2,
+.cta .section-header .section-subtitle {
     color: var(--white);
 }
 
@@ -415,8 +421,7 @@ section:not(.dark) .scroll-indicator:hover {
    ======================================= */
 
 .advantage {
-    background-color: var(--dark-bg);
-    color: var(--text-on-dark);
+    background-color: var(--white); /* New Color */
 }
 
 .advantage .main-grid {
@@ -436,7 +441,7 @@ section:not(.dark) .scroll-indicator:hover {
 
 /* Specific section overrides */
 .advantage .main-title {
-    color: var(--white);
+    color: var(--text); /* Changed from var(--white) */
     text-align: center;
 }
 
@@ -449,14 +454,14 @@ section:not(.dark) .scroll-indicator:hover {
 }
 
 .advantage .main-subtitle {
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--text-light); /* Changed from rgba(255, 255, 255, 0.85) */
     font-size: 1.1rem;
     margin-bottom: 2rem;
 }
 
 .advantage .benefit-item {
-    background: var(--dark-card);
-    border: 1px solid var(--dark-border);
+    background: var(--white); /* Changed from var(--dark-card) */
+    border: 1px solid var(--border); /* Changed from var(--dark-border) */
     border-radius: var(--border-radius-lg);
     padding: 1.5rem;
     display: flex;
@@ -467,8 +472,9 @@ section:not(.dark) .scroll-indicator:hover {
 }
 
 .advantage .benefit-item:hover {
-    background: var(--dark-hover);
+    background: var(--light-bg); /* Changed from var(--dark-hover) */
     transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
 }
 
 .advantage .benefit-icon {
@@ -485,13 +491,13 @@ section:not(.dark) .scroll-indicator:hover {
 }
 
 .advantage .benefit-content h4 {
-    color: var(--white);
+    color: var(--primary); /* Changed from var(--white) */
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
 }
 
 .advantage .benefit-content p {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-light); /* Changed from rgba(255, 255, 255, 0.8) */
     margin: 0;
 }
 
@@ -509,8 +515,8 @@ section:not(.dark) .scroll-indicator:hover {
 }
 
 .advantage-card {
-    background: var(--dark-card);
-    border: 1px solid var(--dark-border);
+    background: var(--white); /* Changed from var(--dark-card) */
+    border: 1px solid var(--border); /* Changed from var(--dark-border) */
     border-radius: var(--border-radius-lg);
     padding: 2rem;
     text-align: center;
@@ -518,9 +524,10 @@ section:not(.dark) .scroll-indicator:hover {
 }
 
 .advantage-card:hover {
-    background: var(--dark-hover);
+    background: var(--light-bg); /* Changed from var(--dark-hover) */
     transform: translateY(-5px);
-    border-color: var(--accent);
+    border-color: var(--secondary); /* Changed from var(--accent) */
+    box-shadow: var(--shadow-md);
 }
 
 .advantage-card .advantage-icon {
@@ -537,19 +544,19 @@ section:not(.dark) .scroll-indicator:hover {
 }
 
 .advantage-card h4 {
-    color: var(--white);
+    color: var(--primary); /* Changed from var(--white) */
     font-size: 1.25rem;
     margin-bottom: 0.75rem;
 }
 
 .advantage-card p {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-light); /* Changed from rgba(255, 255, 255, 0.8) */
     margin-bottom: 0;
     font-size: 0.95rem;
 }
 
 .strapline {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text); /* Changed from rgba(255, 255, 255, 0.9) */
     font-size: 1.3rem;
     font-weight: 500;
     margin-top: 1.5rem;
@@ -566,9 +573,7 @@ section:not(.dark) .scroll-indicator:hover {
     padding: 6rem 0;
 }
 
-.services.dark {
-    background-color: var(--dark-bg);
-}
+
 
 .services .container {
     display: flex;
@@ -681,40 +686,14 @@ section:not(.dark) .scroll-indicator:hover {
     background: var(--primary);
 }
 
-.services.dark .service-card {
-    background: var(--dark-card);
-    border-color: var(--dark-border);
-}
 
-.services.dark .service-card:hover {
-    background: var(--dark-hover);
-    border-color: var(--accent);
-    box-shadow: none;
-}
-
-.services.dark .service-card h3 {
-    color: var(--white);
-}
-
-.services.dark .service-card p {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.services.dark .swiper-button-next,
-.services.dark .swiper-button-prev {
-    color: var(--white);
-}
-
-.services.dark .swiper-pagination-bullet-active {
-    background: var(--white);
-}
 
 /* =======================================
    Process Section (Vertical Timeline)
    ======================================= */
 
 .process {
-    background-color: var(--light-bg);
+    background-color: var(--white); /* New Color */
     height: 100vh;
     max-height: 100vh; /* Strictly enforce viewport height */
     padding: 0; /* Remove padding from the section itself */
@@ -722,9 +701,7 @@ section:not(.dark) .scroll-indicator:hover {
     flex-direction: column;
 }
 
-.process.dark {
-    background-color: var(--dark-bg);
-}
+
 
 .process .container {
     display: flex;
@@ -775,9 +752,7 @@ section:not(.dark) .scroll-indicator:hover {
     z-index: 0;
 }
 
-.process.dark .process-timeline::after {
-    background-color: var(--dark-border);
-}
+
 
 .timeline-item {
     padding: 1rem 2.5rem;
@@ -810,15 +785,7 @@ section:not(.dark) .scroll-indicator:hover {
     border-color: var(--secondary);
 }
 
-.process.dark .timeline-content {
-    background-color: var(--dark-card);
-    border-color: var(--dark-border);
-}
 
-.process.dark .timeline-content:hover {
-    background: var(--dark-hover);
-    border-color: var(--accent);
-}
 
 .timeline-item:nth-child(odd) {
     left: 0;
@@ -841,9 +808,7 @@ section:not(.dark) .scroll-indicator:hover {
     border: medium solid var(--white);
 }
 
-.process.dark .timeline-item .timeline-content::before {
-    border-color: transparent var(--dark-card) transparent transparent;
-}
+
 
 .timeline-item:nth-child(odd) .timeline-content::before {
     right: -10px;
@@ -880,9 +845,7 @@ section:not(.dark) .scroll-indicator:hover {
     box-shadow: 0 0 0 8px rgba(46, 139, 148, 0.2);
 }
 
-.process.dark .timeline-icon {
-    border-color: var(--dark-bg);
-}
+
 
 .timeline-item:nth-child(odd) .timeline-icon {
     right: -25px;
@@ -897,18 +860,7 @@ section:not(.dark) .scroll-indicator:hover {
     margin-bottom: 0.75rem;
 }
 
-.process.dark .timeline-title {
-    color: var(--white);
-}
 
-.timeline-content p {
-    margin-bottom: 0;
-    color: var(--text-light);
-}
-
-.process.dark .timeline-content p {
-    color: rgba(255, 255, 255, 0.8);
-}
 
 .process-footer {
     text-align: center;
@@ -923,10 +875,7 @@ section:not(.dark) .scroll-indicator:hover {
     flex-shrink: 0;
 }
 
-.process.dark .process-footer {
-    background-color: var(--dark-card);
-    border-color: var(--dark-border);
-}
+
 
 .process-footer p {
     margin-bottom: 0;
@@ -934,17 +883,7 @@ section:not(.dark) .scroll-indicator:hover {
     color: var(--text);
 }
 
-.process.dark .process-footer p {
-    color: var(--text-on-dark);
-}
 
-.process-footer strong {
-    color: var(--primary);
-}
-
-.process.dark .process-footer strong {
-    color: var(--accent);
-}
 
 @media screen and (max-width: 768px) {
     .process-timeline::after {
@@ -974,10 +913,7 @@ section:not(.dark) .scroll-indicator:hover {
         border-color: transparent var(--white) transparent transparent;
     }
 
-    .process.dark .timeline-item:nth-child(even) .timeline-content::before,
-    .process.dark .timeline-item:nth-child(odd) .timeline-content::before {
-        border-color: transparent var(--dark-card) transparent transparent;
-    }
+    
 }
 
 
@@ -1017,7 +953,7 @@ section:not(.dark) .scroll-indicator:hover {
    ======================================= */
 
 .cta {
-    background-color: var(--dark-bg);
+    background-color: var(--primary); /* New Color */
     color: var(--text-on-dark);
     display: flex;
     flex-direction: column;
