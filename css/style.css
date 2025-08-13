@@ -4,21 +4,21 @@
 
 :root {
     /* Theme Colors */
-    --primary: #2A4A7C;         /* Deep Blue for trust */
-    --primary-dark: #1E3A63;     /* Darker shade of primary */
-    --primary-light: #3B5B95;    /* Lighter shade of primary */
-    --secondary: #3DA9A2;       /* Calming Teal for safety/clarity */
-    --accent: #FF7A59;          /* Vibrant Orange for energy/CTA */
+    --primary: #4F46E5;         /* Vibrant Indigo */
+    --primary-dark: #4338CA;     /* Darker shade of primary */
+    --primary-light: #6366F1;    /* Lighter shade of primary */
+    --secondary: #10B981;       /* Clean Green */
+    --accent: #EC4899;          /* Confident Pink/Magenta */
     --white: #FFFFFF;
-    --text: #333F48;
-    --text-light: #6C757D;
-    --text-on-dark: #F8F9FA;
-    --light-bg: #F8F9FA;        /* Soft Off-White */
-    --border: #e5e7eb;
-    --dark-bg: #1A202C;         /* Dark Charcoal Blue */
-    --dark-card: rgba(255, 255, 255, 0.05);
-    --dark-border: rgba(255, 255, 255, 0.1);
-    --dark-hover: rgba(255, 255, 255, 0.08);
+    --text: #374151;
+    --text-light: #6B7280;
+    --text-on-dark: #F9FAFB;
+    --light-bg: #F9FAFB;        /* Soft Off-White */
+    --border: #E5E7EB;
+    --dark-bg: #111827;         /* Rich Dark Blue/Gray */
+    --dark-card: #1F2937;
+    --dark-border: #374151;
+    --dark-hover: #374151;
 
     /* Layout */
     --container-max: 1200px;
@@ -130,14 +130,14 @@ a:hover { color: var(--primary); }
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--accent) 0%, #ff4a1c 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     color: var(--white);
-    box-shadow: 0 4px 15px rgba(255, 107, 74, 0.3);
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 107, 74, 0.4);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
 }
 
 .btn-outline {
@@ -244,7 +244,7 @@ a:hover { color: var(--primary); }
 
 .hero {
     min-height: 100vh;
-    background-color: var(--dark-bg);
+    background: radial-gradient(ellipse at bottom, var(--dark-bg) 0%, #0F172A 100%);
     color: var(--text-on-dark);
     padding: 0;
     display: flex;
@@ -718,13 +718,14 @@ section:not(.dark) .scroll-indicator:hover {
 }
 
 .process-content-wrapper {
-    flex-grow: 1;
+    height: calc(79vh - 200px);
     overflow-y: auto;
     padding-right: 1rem; /* Space for scrollbar */
-    padding-bottom: 150px; /* Add space at the bottom */
-    margin-right: -1rem; /* Hide scrollbar */
+    padding-bottom: 1rem;
+    margin: calc(10.5vh - 150px) 0 0 0; /* Moved up by 150px from center */
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    position: relative;
 }
 
 .process-content-wrapper::-webkit-scrollbar {
@@ -737,6 +738,8 @@ section:not(.dark) .scroll-indicator:hover {
     max-width: 800px;
     margin: 0 auto;
     padding: 1rem 0; /* Reduced padding */
+    height: 100%;
+    min-height: 79vh; /* Match the height of its container */
 }
 
 .process-timeline::after {
