@@ -726,6 +726,8 @@ section:not(.dark) .scroll-indicator:hover {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .process-content-wrapper::-webkit-scrollbar {
@@ -737,9 +739,8 @@ section:not(.dark) .scroll-indicator:hover {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    padding: 1rem 0; /* Reduced padding */
-    height: 100%;
-    min-height: 79vh; /* Match the height of its container */
+    padding: 1rem 0 6rem 0; /* Added bottom padding for footer */
+    flex-grow: 1;
 }
 
 .process-timeline::after {
@@ -867,15 +868,15 @@ section:not(.dark) .scroll-indicator:hover {
 
 .process-footer {
     text-align: center;
-    margin-top: 2rem; /* Reduced margin */
+    margin: 2rem auto 0;
     padding: 1.5rem;
     background: var(--white);
     border-radius: var(--border-radius-lg);
     border: 1px solid var(--border);
     max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    flex-shrink: 0;
+    width: 100%;
+    position: relative;
+    z-index: 1;
 }
 
 
