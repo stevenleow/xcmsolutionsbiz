@@ -19,8 +19,18 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    
+    <link rel="stylesheet" href="css/style.css?v=1.1">
+    <script>
+        // Force browser to reload stylesheet
+        (function() {
+            const stylesheet = document.querySelector('link[href="css/style.css?v=1.1"]');
+            if (stylesheet) {
+                const url = new URL(stylesheet.href);
+                url.searchParams.set('v', new Date().getTime());
+                stylesheet.href = url.toString();
+            }
+        })();
+    </script>
 </head>
 <body>
     

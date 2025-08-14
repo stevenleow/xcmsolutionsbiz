@@ -4,21 +4,21 @@
 
 :root {
     /* Theme Colors */
-    --primary: #4F46E5;         /* Vibrant Indigo */
-    --primary-dark: #4338CA;     /* Darker shade of primary */
-    --primary-light: #6366F1;    /* Lighter shade of primary */
-    --secondary: #10B981;       /* Clean Green */
-    --accent: #EC4899;          /* Confident Pink/Magenta */
+    --primary: #0A2540;         /* Deep Blue */
+    --primary-dark: #081E33;     /* Darker shade of primary */
+    --primary-light: #1B3B59;    /* Lighter shade of primary */
+    --secondary: #00D4D4;       /* Bright Teal */
+    --accent: #7A52CC;          /* Confident Violet */
     --white: #FFFFFF;
-    --text: #374151;
-    --text-light: #6B7280;
-    --text-on-dark: #F9FAFB;
-    --light-bg: #F9FAFB;        /* Soft Off-White */
-    --border: #E5E7EB;
-    --dark-bg: #111827;         /* Rich Dark Blue/Gray */
-    --dark-card: #1F2937;
-    --dark-border: #374151;
-    --dark-hover: #374151;
+    --text: #333333;
+    --text-light: #666666;
+    --text-on-dark: #F6F9FC;
+    --light-bg: #F6F9FC;        /* Soft Off-White */
+    --border: #E6E6E6;
+    --dark-bg: #0A2540;         /* Deep Blue */
+    --dark-card: #1B3B59;
+    --dark-border: #2C5073;
+    --dark-hover: #2C5073;
 
     /* Layout */
     --container-max: 1200px;
@@ -53,9 +53,10 @@ body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: var(--text);
-    background-color: var(--white);
+    background: linear-gradient(180deg, #FFFFFF 0%, #F6F9FC 25%, #E6E9ED 50%, #D6D9DD 75%, #C6C9CD 100%);
     font-size: 16px;
     overflow-x: hidden;
+    background-attachment: fixed;
 }
 
 .container {
@@ -74,6 +75,7 @@ section {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: transparent; /* Make sections transparent to show body gradient */
 }
 
 /* =======================================
@@ -421,7 +423,7 @@ section:not(.dark) .scroll-indicator:hover {
    ======================================= */
 
 .advantage {
-    background-color: var(--white); /* New Color */
+    background-color: var(--dark-bg);
 }
 
 .advantage .main-grid {
@@ -569,7 +571,7 @@ section:not(.dark) .scroll-indicator:hover {
    ======================================= */
 
 .services {
-    background-color: var(--light-bg);
+    background-color: var(--dark-bg);
     padding: 6rem 0;
 }
 
@@ -693,7 +695,7 @@ section:not(.dark) .scroll-indicator:hover {
    ======================================= */
 
 .process {
-    background-color: var(--white); /* New Color */
+    background-color: var(--dark-bg);
     height: 100vh;
     max-height: 100vh; /* Strictly enforce viewport height */
     padding: 0; /* Remove padding from the section itself */
@@ -957,7 +959,7 @@ section:not(.dark) .scroll-indicator:hover {
    ======================================= */
 
 .cta {
-    background-color: var(--primary); /* New Color */
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
     color: var(--text-on-dark);
     display: flex;
     flex-direction: column;
@@ -1134,15 +1136,10 @@ section:not(.dark) .scroll-indicator:hover {
    CTA Section
    ======================================= */
 
-.cta {
-    background: var(--dark-bg);
-    color: var(--text-on-dark);
-    text-align: center;
-}
-
 .cta h2 {
     color: var(--white);
 }
+
 
 /* =======================================
    Back to Top Button
