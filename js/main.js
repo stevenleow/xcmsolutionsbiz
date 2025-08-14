@@ -3,9 +3,81 @@
 
 
 // Main JavaScript for XCM Solutions Website
+// Section-specific background configurations
+const sectionBackgrounds = {
+    'hero': {
+        start: '#0A2540',  // Deep Blue
+        end: '#0D2D4F'     // Slightly lighter blue
+    },
+    'advantage': {
+        start: '#0D2D4F',  // Slightly lighter blue
+        end: '#7A52CC'     // Violet
+    },
+    'services': {
+        start: '#7A52CC',  // Violet
+        end: '#00D4D4'     // Bright Teal
+    },
+    'process': {
+        start: '#00D4D4',  // Bright Teal
+        end: '#0A8B8B'     // Darker Teal
+    },
+    'cta': {
+        start: '#0A8B8B',  // Darker Teal
+        end: '#0A2540'     // Back to Deep Blue
+    },
+    'default': {
+        start: '#0A2540',  // Deep Blue
+        end: '#0D2D4F'     // Slightly lighter blue
+    }
+};
+
+// Function to update section backgrounds based on visibility
+function updateSectionBackgrounds() {
+    const sections = document.querySelectorAll('section');
+    const windowHeight = window.innerHeight;
+    const scrollPosition = window.scrollY;
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.id || 'default';
+        const sectionConfig = sectionBackgrounds[sectionId] || sectionBackgrounds['default'];
+        
+        // Calculate how much of the section is visible
+        const sectionScrollPosition = scrollPosition + (windowHeight / 2);
+        const sectionScrollEnd = sectionTop + sectionHeight;
+        
+        // Only update if section is in or near viewport
+        if (sectionScrollPosition >= (sectionTop - windowHeight) && 
+            sectionScrollPosition <= (sectionScrollEnd + windowHeight)) {
+            
+            // Calculate scroll percentage within the section
+            let scrollPercent = (sectionScrollPosition - sectionTop) / (sectionHeight + windowHeight);
+            scrollPercent = Math.max(0, Math.min(1, scrollPercent)); // Clamp between 0 and 1
+            
+            // Update the section's background
+            section.style.background = `linear-gradient(135deg, 
+                ${sectionConfig.start} 0%, 
+                ${sectionConfig.end} 100%)`;
+        }
+    });
+}
+
+// Throttle function to limit how often the scroll event fires
+function throttle(callback, limit) {
+    let waiting = false;
+    return function() {
+        if (!waiting) {
+            callback.apply(this, arguments);
+            waiting = true;
+            setTimeout(() => {
+                waiting = false;
+            }, limit);
+        }
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    
-    
     try {
         // Initialize TypeWriter functionality
         initTypeWriter();
@@ -16,8 +88,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize timeline animation
         initTimelineAnimation();
         
-    } catch (error) {
+        // Add scroll event listener for background transition
+        window.addEventListener('scroll', throttle(updateSectionBackgrounds, 50));
         
+        // Initial background setup
+        updateSectionBackgrounds();
+        
+    } catch (error) {
+        console.error('Initialization error:', error);
     }
 });
 

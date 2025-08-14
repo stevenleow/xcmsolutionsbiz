@@ -53,10 +53,13 @@ body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: var(--text);
-    background: linear-gradient(180deg, #FFFFFF 0%, #F6F9FC 25%, #E6E9ED 50%, #D6D9DD 75%, #C6C9CD 100%);
+    background: var(--primary) !important;
+    background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
+    background-attachment: fixed !important;
+    transition: background 0.5s ease-out;
+    min-height: 100vh;
     font-size: 16px;
     overflow-x: hidden;
-    background-attachment: fixed;
 }
 
 .container {
@@ -75,7 +78,30 @@ section {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: transparent; /* Make sections transparent to show body gradient */
+    transition: background 0.5s ease-out;
+    background: var(--primary);
+    background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+/* Section-specific background overrides */
+#hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
+}
+
+#advantage {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--accent) 100%) !important;
+}
+
+#services {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%) !important;
+}
+
+#process {
+    background: linear-gradient(135deg, var(--secondary) 0%, #0A8B8B 100%) !important;
+}
+
+#cta {
+    background: linear-gradient(135deg, #0A8B8B 0%, var(--primary) 100%) !important;
 }
 
 /* =======================================
