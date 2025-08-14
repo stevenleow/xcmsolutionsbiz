@@ -5,39 +5,60 @@ function updateGradientPosition() {
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight - windowHeight;
     
-    if (documentHeight <= 0) {
-        console.log('Document height not ready yet');
-        return; // Prevent division by zero
+    // Get the hero and CTA sections
+    const heroSection = document.getElementById('hero');
+    const ctaSection = document.getElementById('cta');
+    
+    if (!heroSection || !ctaSection) {
+        console.log('Sections not found');
+        return;
     }
     
-    // Calculate scroll percentage (0 to 1)
-    const scrollPercentage = Math.min(scrollPosition / documentHeight, 1);
+    // Calculate the scroll range between hero and CTA sections
+    const heroRect = heroSection.getBoundingClientRect();
+    const ctaRect = ctaSection.getBoundingClientRect();
     
-    // Calculate the background position (0% to 100% of the gradient)
-    const maxPosition = 100;
-    let backgroundPosition = Math.round(scrollPercentage * maxPosition * 100) / 100;
+    const heroEnd = heroRect.top + window.scrollY + heroRect.height;
+    const ctaStart = ctaRect.top + window.scrollY;
     
-    // Ensure the position stays within bounds
-    backgroundPosition = Math.min(backgroundPosition, 100);
+    // Calculate the scroll range where gradient should transition
+    const gradientStart = 0; // Start of the page
+    const gradientEnd = ctaStart + (ctaRect.height / 2); // Middle of CTA section
+    const gradientRange = gradientEnd - gradientStart;
+    
+    // Calculate the gradient position (0% at hero, 100% at CTA)
+    let gradientPosition = 0;
+    
+    if (scrollPosition <= gradientStart) {
+        // Before hero section
+        gradientPosition = 0;
+    } else if (scrollPosition >= gradientEnd) {
+        // Past CTA section
+        gradientPosition = 100;
+    } else {
+        // Between hero and CTA
+        const scrollProgress = (scrollPosition - gradientStart) / gradientRange;
+        gradientPosition = Math.min(Math.round(scrollProgress * 100), 100);
+    }
     
     // Update the gradient overlay position
     const gradientOverlay = document.getElementById('gradient-overlay');
     if (gradientOverlay) {
-        gradientOverlay.style.backgroundPosition = `0% ${backgroundPosition}%`;
+        gradientOverlay.style.backgroundPosition = `0% ${gradientPosition}%`;
     }
     
     // Log to console for debugging
     console.log('Gradient position updated:', {
         scrollPosition,
-        documentHeight,
-        scrollPercentage: (scrollPercentage * 100).toFixed(2) + '%',
-        backgroundPosition: backgroundPosition + '%',
-        element: gradientOverlay ? 'Found gradient overlay' : 'Gradient overlay not found!'
+        gradientPosition: gradientPosition + '%',
+        heroEnd,
+        ctaStart,
+        gradientRange
     });
     
     // Update debug info if it exists
     if (window.updateDebugInfo) {
-        window.updateDebugInfo(scrollPosition, documentHeight, scrollPercentage, backgroundPosition);
+        window.updateDebugInfo(scrollPosition, documentHeight, (scrollPosition / documentHeight), gradientPosition);
     }
 }
 

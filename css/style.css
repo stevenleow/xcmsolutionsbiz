@@ -91,14 +91,12 @@ body {
     height: 100%;
     background: linear-gradient(
         to bottom,
-        #030A12 0%,     /* Very dark blue - represents the problem */
-        #0A2540 15%,    /* Dark blue */
-        #1B3B59 30%,    /* Medium dark blue */
-        #3A5F8A 45%,    /* Medium blue */
-        #5D8FCC 60%,    /* Lighter blue */
-        #7A52CC 75%,    /* Purple - transition color */
-        #00D4D4 90%,    /* Bright teal - solution emerging */
-        #00FFE0 100%    /* Bright cyan - problem resolved */
+        #030A12 0%,     /* Very dark blue - hero section */
+        #0A1A2E 20%,    /* Dark blue */
+        #1A3A5F 40%,    /* Medium dark blue */
+        #2D5A8C 60%,    /* Medium blue */
+        #4A7CB0 80%,    /* Light blue */
+        #00B4D8 100%    /* Bright teal - CTA section */
     );
     background-size: 100% 400%;
     background-position: 0% 0%;
