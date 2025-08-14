@@ -49,17 +49,72 @@ html {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+}
+
+/* Gradient background */
+html {
+    min-height: 100%;
+    background: #0A2540; /* Fallback color */
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: var(--text);
-    background: var(--primary) !important;
-    background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
-    background-attachment: fixed !important;
-    transition: background 0.5s ease-out;
-    min-height: 100vh;
     font-size: 16px;
     overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: transparent !important;
+}
+
+/* Gradient Overlay */
+#gradient-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        #0A2540 0%,
+        #081E33 20%,
+        #7A52CC 50%,
+        #00D4D4 80%,
+        #0A2540 100%
+    );
+    background-size: 100% 300%;
+    background-position: 0% 0%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    transition: background-position 0.3s ease-out;
+    z-index: -1; /* Behind all content */
+    pointer-events: none; /* Don't interfere with clicks */
+}
+
+/* Make sure all sections have transparent background */
+section {
+    background: transparent !important;
+}
+
+/* Ensure content is above the background */
+body > *:not(script) {
+    position: relative;
+    z-index: 1;
 }
 
 .container {
@@ -72,36 +127,24 @@ body {
 section {
     padding: var(--section-padding);
     position: relative;
-    overflow: hidden;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: background 0.5s ease-out;
-    background: var(--primary);
-    background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+    background: transparent;
+    z-index: 1;
+    width: 100%;
 }
 
-/* Section-specific background overrides */
-#hero {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
-}
-
-#advantage {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--accent) 100%) !important;
-}
-
-#services {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%) !important;
-}
-
-#process {
-    background: linear-gradient(135deg, var(--secondary) 0%, #0A8B8B 100%) !important;
-}
-
-#cta {
-    background: linear-gradient(135deg, #0A8B8B 0%, var(--primary) 100%) !important;
+/* Content wrapper to ensure proper z-index layering */
+.content-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 1.5rem;
 }
 
 /* =======================================

@@ -1,66 +1,44 @@
-
-
-
-
 // Main JavaScript for XCM Solutions Website
-// Section-specific background configurations
-const sectionBackgrounds = {
-    'hero': {
-        start: '#0A2540',  // Deep Blue
-        end: '#0D2D4F'     // Slightly lighter blue
-    },
-    'advantage': {
-        start: '#0D2D4F',  // Slightly lighter blue
-        end: '#7A52CC'     // Violet
-    },
-    'services': {
-        start: '#7A52CC',  // Violet
-        end: '#00D4D4'     // Bright Teal
-    },
-    'process': {
-        start: '#00D4D4',  // Bright Teal
-        end: '#0A8B8B'     // Darker Teal
-    },
-    'cta': {
-        start: '#0A8B8B',  // Darker Teal
-        end: '#0A2540'     // Back to Deep Blue
-    },
-    'default': {
-        start: '#0A2540',  // Deep Blue
-        end: '#0D2D4F'     // Slightly lighter blue
-    }
-};
-
-// Function to update section backgrounds based on visibility
-function updateSectionBackgrounds() {
-    const sections = document.querySelectorAll('section');
+// Function to update gradient position based on scroll
+function updateGradientPosition() {
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
-    const scrollPosition = window.scrollY;
+    const documentHeight = document.documentElement.scrollHeight - windowHeight;
     
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const sectionId = section.id || 'default';
-        const sectionConfig = sectionBackgrounds[sectionId] || sectionBackgrounds['default'];
-        
-        // Calculate how much of the section is visible
-        const sectionScrollPosition = scrollPosition + (windowHeight / 2);
-        const sectionScrollEnd = sectionTop + sectionHeight;
-        
-        // Only update if section is in or near viewport
-        if (sectionScrollPosition >= (sectionTop - windowHeight) && 
-            sectionScrollPosition <= (sectionScrollEnd + windowHeight)) {
-            
-            // Calculate scroll percentage within the section
-            let scrollPercent = (sectionScrollPosition - sectionTop) / (sectionHeight + windowHeight);
-            scrollPercent = Math.max(0, Math.min(1, scrollPercent)); // Clamp between 0 and 1
-            
-            // Update the section's background
-            section.style.background = `linear-gradient(135deg, 
-                ${sectionConfig.start} 0%, 
-                ${sectionConfig.end} 100%)`;
-        }
+    if (documentHeight <= 0) {
+        console.log('Document height not ready yet');
+        return; // Prevent division by zero
+    }
+    
+    // Calculate scroll percentage (0 to 1)
+    const scrollPercentage = Math.min(scrollPosition / documentHeight, 1);
+    
+    // Calculate the background position (0% to 100% of the gradient)
+    const maxPosition = 100;
+    let backgroundPosition = Math.round(scrollPercentage * maxPosition * 100) / 100;
+    
+    // Ensure the position stays within bounds
+    backgroundPosition = Math.min(backgroundPosition, 100);
+    
+    // Update the gradient overlay position
+    const gradientOverlay = document.getElementById('gradient-overlay');
+    if (gradientOverlay) {
+        gradientOverlay.style.backgroundPosition = `0% ${backgroundPosition}%`;
+    }
+    
+    // Log to console for debugging
+    console.log('Gradient position updated:', {
+        scrollPosition,
+        documentHeight,
+        scrollPercentage: (scrollPercentage * 100).toFixed(2) + '%',
+        backgroundPosition: backgroundPosition + '%',
+        element: gradientOverlay ? 'Found gradient overlay' : 'Gradient overlay not found!'
     });
+    
+    // Update debug info if it exists
+    if (window.updateDebugInfo) {
+        window.updateDebugInfo(scrollPosition, documentHeight, scrollPercentage, backgroundPosition);
+    }
 }
 
 // Throttle function to limit how often the scroll event fires
@@ -77,8 +55,71 @@ function throttle(callback, limit) {
     };
 }
 
+// Create debug element
+function createDebugElement() {
+    const debugEl = document.createElement('div');
+    debugEl.id = 'gradient-debug';
+    debugEl.style.position = 'fixed';
+    debugEl.style.bottom = '20px';
+    debugEl.style.right = '20px';
+    debugEl.style.background = 'rgba(0,0,0,0.7)';
+    debugEl.style.color = 'white';
+    debugEl.style.padding = '10px';
+    debugEl.style.borderRadius = '5px';
+    debugEl.style.fontFamily = 'monospace';
+    debugEl.style.zIndex = '9999';
+    debugEl.style.fontSize = '12px';
+    debugEl.style.pointerEvents = 'none';
+    debugEl.style.maxWidth = '300px';
+    debugEl.style.overflow = 'hidden';
+    debugEl.style.wordBreak = 'break-all';
+    
+    // Add a visual indicator of the current gradient position
+    const gradientPreview = document.createElement('div');
+    gradientPreview.style.height = '10px';
+    gradientPreview.style.marginTop = '5px';
+    gradientPreview.style.borderRadius = '5px';
+    gradientPreview.style.background = 'linear-gradient(to right, var(--primary), var(--primary-dark), var(--accent), var(--secondary))';
+    debugEl.appendChild(gradientPreview);
+    
+    const positionIndicator = document.createElement('div');
+    positionIndicator.style.position = 'absolute';
+    positionIndicator.style.top = '0';
+    positionIndicator.style.width = '2px';
+    positionIndicator.style.height = '100%';
+    positionIndicator.style.background = 'white';
+    positionIndicator.style.transform = 'translateX(-50%)';
+    gradientPreview.style.position = 'relative';
+    gradientPreview.appendChild(positionIndicator);
+    
+    document.body.appendChild(debugEl);
+    
+    // Make updateDebugInfo globally available
+    window.updateDebugInfo = (scrollPos, docHeight, scrollPerc, bgPos) => {
+        debugEl.innerHTML = `
+            <div>Scroll: ${Math.round(scrollPos)}px / ${docHeight}px</div>
+            <div>Progress: ${(scrollPerc * 100).toFixed(1)}%</div>
+            <div>Gradient: ${bgPos.toFixed(1)}%</div>
+        `;
+        
+        // Re-add the gradient preview and indicator
+        debugEl.appendChild(gradientPreview);
+        gradientPreview.appendChild(positionIndicator);
+        
+        // Update the position indicator
+        const indicatorPos = (bgPos / 80) * 100; // 80 is our maxPosition
+        positionIndicator.style.left = `${indicatorPos}%`;
+    };
+    
+    return debugEl;
+}
+
+// Initialize everything when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     try {
+        // Create debug element
+        const debugEl = createDebugElement();
+        
         // Initialize TypeWriter functionality
         initTypeWriter();
         
@@ -88,16 +129,59 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize timeline animation
         initTimelineAnimation();
         
-        // Add scroll event listener for background transition
-        window.addEventListener('scroll', throttle(updateSectionBackgrounds, 50));
+        // Update debug info on scroll
+        const updateDebugInfo = () => {
+            const scrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight - windowHeight;
+            const scrollPercentage = documentHeight > 0 ? Math.min(scrollPosition / documentHeight, 1) : 0;
+            const backgroundPosition = Math.round(scrollPercentage * 66.67 * 100) / 100;
+            
+            debugEl.innerHTML = `
+                <div>Scroll: ${Math.round(scrollPosition)}px</div>
+                <div>Doc Height: ${documentHeight}px</div>
+                <div>Scroll %: ${(scrollPercentage * 100).toFixed(2)}%</div>
+                <div>Gradient Pos: ${backgroundPosition}%</div>
+            `;
+        };
         
-        // Initial background setup
-        updateSectionBackgrounds();
+        // Create a throttled version of updateGradientPosition
+        const throttledUpdateGradient = throttle(updateGradientPosition, 16);
+        
+        // Add scroll event listener
+        window.addEventListener('scroll', () => {
+            throttledUpdateGradient();
+            updateDebugInfo();
+        }, { passive: true });
+        
+        // Initial setup with a small delay to ensure DOM is ready
+        setTimeout(() => {
+            updateGradientPosition();
+            updateDebugInfo();
+            
+            // Force a repaint to ensure the gradient is visible
+            document.body.style.backgroundImage = 'none';
+            document.body.offsetHeight; // Trigger reflow
+            document.body.style.backgroundImage = '';
+        }, 100);
+        
+        // Update on resize with debounce
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                updateGradientPosition();
+                updateDebugInfo();
+            }, 100);
+        });
         
     } catch (error) {
         console.error('Initialization error:', error);
     }
 });
+
+// Also update on window resize to handle any layout changes
+window.addEventListener('resize', throttle(updateGradientPosition, 100));
 
 // Back to Top Functionality
 function initBackToTop() {
