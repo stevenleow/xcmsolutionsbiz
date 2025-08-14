@@ -232,222 +232,102 @@ function initBackToTop() {
 // TypeWriter Class
 class TypeWriter {
     constructor(txtElement, words, wait = 3000) {
-        // Validate and initialize properties
-        try {
-            // Validate element
-            if (!txtElement || !(txtElement instanceof HTMLElement)) {
-                throw new Error('Invalid text element provided to TypeWriter');
-            }
-            
-            // Validate words array
-            if (!Array.isArray(words) || words.length === 0) {
-                throw new Error('Invalid or empty words array provided to TypeWriter');
-            }
-            
-            // Validate element is in the DOM
-            if (!document.body.contains(txtElement)) {
-                
-                return;
-            }
-            
-            // Store references
-            this.txtElement = txtElement;
-            this.words = words.map(word => String(word)); // Ensure all words are strings
-            this.txt = '';
-            this.wordIndex = 0;
-            this.wait = Math.max(parseInt(wait, 10) || 3000, 1000); // Ensure minimum 1s delay
-            this.isDeleting = false;
-            this.animationFrame = null;
-            this.isActive = false; // Start inactive until fully initialized
-            
-            // Bind methods
-            this.handleResize = this.handleResize.bind(this);
-            this.type = this.type.bind(this);
-            this.cleanup = this.cleanup.bind(this);
-            
-            // Initial setup
-            try {
-                // Store original styles for cleanup
-                this.originalStyles = {
-                    visibility: txtElement.style.visibility,
-                    opacity: txtElement.style.opacity,
-                    minHeight: txtElement.style.minHeight
-                };
-                
-                // Apply initial styles
-                txtElement.style.visibility = 'visible';
-                txtElement.style.opacity = '1';
-                txtElement.style.minHeight = '1.2em'; // Prevent layout shifts
-                
-                // Add event listeners
-                window.addEventListener('resize', this.handleResize);
-                
-                // Mark as active and start typing
-                this.isActive = true;
-                
-                // Start with a small delay to allow the browser to render
-                setTimeout(() => {
-                    if (this.isActive) {
-                        this.type();
-                    }
-                }, 100);
-                
-            } catch (e) {
-                ('Error during TypeWriter initialization:', e);
-                this.cleanup();
-                throw e; // Re-throw to be caught by the outer try-catch
-            }
-            
-        } catch (e) {
-            ('Failed to initialize TypeWriter:', e);
-            this.cleanup();
-        }
-    }
-
-    handleResize() {
-        if (!this.isActive) return;
+        // Store references
+        this.txtElement = txtElement;
+        this.words = words.map(word => String(word));
+        this.txt = '';
+        this.wordIndex = 0;
+        this.wait = Math.max(parseInt(wait, 10) || 3000, 1000);
+        this.isDeleting = false;
+        this.isActive = false;
+        this.animationId = null;
+        this.lastTime = 0;
+        this.typingDelay = 100; // ms per character when typing
+        this.erasingDelay = 50; // ms per character when erasing
+        this.newTextDelay = 1000; // delay between words
         
-        try {
-            // Recalculate layout on window resize
-            this.adjustTextSize();
-        } catch (e) {
-            ('Error in handleResize:', e);
-        }
+        // Create DOM elements
+        this.wrap = document.createElement('span');
+        this.wrap.className = 'wrap';
+        this.textSpan = document.createElement('span');
+        this.textSpan.className = 'text text-gradient';
+        this.cursor = document.createElement('span');
+        this.cursor.className = 'cursor';
+        this.wrap.appendChild(this.textSpan);
+        this.wrap.appendChild(this.cursor);
+        this.txtElement.innerHTML = '';
+        this.txtElement.appendChild(this.wrap);
+        
+        // Initialize
+        this.init();
     }
     
-    adjustTextSize() {
-        if (!this.isActive || !this.txtElement) return;
+    init() {
+        this.isActive = true;
+        this.txtElement.style.visibility = 'visible';
+        this.txtElement.style.opacity = '1';
+        this.txtElement.style.minHeight = this.txtElement.offsetHeight + 'px';
         
-        try {
-            const container = this.txtElement;
-            if (!container.offsetParent) return; // Skip if not visible
-            
-            const text = container.querySelector('.wrap');
-            if (!text) return;
-            
-            // Reset to base size
-            text.style.fontSize = '';
-            
-            // Check if text overflows
-            if (text.scrollWidth > container.offsetWidth) {
-                const computedStyle = window.getComputedStyle(container);
-                const baseSize = parseFloat(computedStyle.fontSize) || 16;
-                const scale = Math.max(0.1, Math.min(1, (container.offsetWidth - 20) / text.scrollWidth));
-                const newSize = Math.max(baseSize * scale, 12); // 12px minimum font size
-                text.style.fontSize = `${newSize}px`;
-            }
-        } catch (e) {
-            ('Error in adjustTextSize:', e);
-        }
+        // Start the animation loop
+        this.animate(0);
     }
-
-    type() {
-        // Double-check if we should continue
-        if (!this.isActive || !this.txtElement || !this.txtElement.isConnected) {
-            this.cleanup();
-            return;
+    
+    animate(timestamp) {
+        if (!this.isActive) return;
+        
+        const deltaTime = timestamp - this.lastTime;
+        this.lastTime = timestamp;
+        
+        // Get current word and set typing speed
+        const currentWord = this.words[this.wordIndex % this.words.length];
+        let typeSpeed = this.isDeleting ? this.erasingDelay : this.typingDelay;
+        
+        // Update text content
+        if (this.isDeleting) {
+            this.txt = currentWord.substring(0, this.txt.length - 1);
+        } else {
+            this.txt = currentWord.substring(0, this.txt.length + 1);
         }
-
-        try {
-            const current = this.wordIndex % this.words.length;
-            const fullTxt = this.words[current];
-            
-            // Update the text
-            if (this.isDeleting) {
-                this.txt = fullTxt.substring(0, this.txt.length - 1);
-            } else {
-                this.txt = fullTxt.substring(0, this.txt.length + 1);
-            }
-
-            // Safely update the element with cursor at the end of text
-            try {
-                if (this.txtElement && this.txtElement.isConnected) {
-                    // Create the text with cursor
-                    this.txtElement.innerHTML = `
-                        <span class="wrap">
-                            <span class="text text-gradient">${this.txt}</span>
-                            <span class="cursor"></span>
-                        </span>
-                    `;
-                    
-                    // Determine typing speed
-                    let typeSpeed = this.isDeleting ? 50 : 100; // 20 chars/sec deleting, 10 chars/sec typing
-
-                    // If word is complete
-                    if (!this.isDeleting && this.txt === fullTxt) {
-                        typeSpeed = this.wait; // Pause at end
-                        this.isDeleting = true;
-                    } else if (this.isDeleting && this.txt === '') {
-                        this.isDeleting = false;
-                        this.wordIndex++;
-                        typeSpeed = 500; // Pause before new word
-                    }
-                    
-                    // Schedule next frame
-                    this.animationFrame = setTimeout(() => this.type(), typeSpeed);
-
-                } else {
-                    this.cleanup();
-                }
-            } catch (e) {
-                ('Error updating text element:', e);
-                this.cleanup();
-            }
-            
-        } catch (e) {
-            ('Error in TypeWriter animation:', e);
-            this.cleanup();
+        
+        // Update DOM
+        this.textSpan.textContent = this.txt;
+        
+        // Determine next step
+        if (!this.isDeleting && this.txt === currentWord) {
+            // Pause at end of word
+            typeSpeed = this.wait;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+            // Move to next word
+            this.isDeleting = false;
+            this.wordIndex++;
+            typeSpeed = this.newTextDelay;
         }
+        
+        // Continue animation loop
+        this.animationId = setTimeout(() => {
+            requestAnimationFrame(this.animate.bind(this));
+        }, typeSpeed);
     }
     
     cleanup() {
-        try {
-            this.isActive = false;
-            
-            // Clear any pending animation frame
-            if (this.animationFrame) {
-                clearTimeout(this.animationFrame);
-                this.animationFrame = null;
-            }
-            
-            // Remove event listeners
-            if (this.handleResize) {
-                try {
-                    window.removeEventListener('resize', this.handleResize);
-                } catch (e) {
-                    ('Error removing resize listener:', e);
-                }
-            }
-            
-            // Clean up element references
-            if (this.txtElement) {
-                try {
-                    // Remove any inline styles we added
-                    this.txtElement.style.visibility = '';
-                    this.txtElement.style.opacity = '';
-                } catch (e) {
-                    ('Error cleaning up text element:', e);
-                }
-                this.txtElement = null;
-            }
-            
-            // Clear other references
-            this.words = [];
-            this.txt = '';
-            
-        } catch (e) {
-            ('Error during TypeWriter cleanup:', e);
-        } finally {
-            // Ensure we don't leak memory
-            this.animationFrame = null;
-            this.txtElement = null;
-            this.words = [];
+        this.isActive = false;
+        if (this.animationId) {
+            clearTimeout(this.animationId);
+            this.animationId = null;
         }
         
-        // Clear other references
+        if (this.txtElement) {
+            this.txtElement.style.visibility = '';
+            this.txtElement.style.opacity = '';
+            this.txtElement.style.minHeight = '';
+            this.txtElement.innerHTML = '';
+        }
+        
+        // Clear references
+        this.txtElement = null;
         this.words = [];
         this.txt = '';
-        
     }
 }
 
