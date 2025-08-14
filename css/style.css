@@ -64,7 +64,7 @@ html, body {
 /* Gradient background */
 html {
     min-height: 100%;
-    background: #0A2540; /* Fallback color */
+    background: #030A12; /* Fallback color - matches darkest gradient color */
 }
 
 body {
@@ -91,17 +91,20 @@ body {
     height: 100%;
     background: linear-gradient(
         to bottom,
-        #0A2540 0%,
-        #081E33 20%,
-        #7A52CC 50%,
-        #00D4D4 80%,
-        #0A2540 100%
+        #030A12 0%,     /* Very dark blue - represents the problem */
+        #0A2540 15%,    /* Dark blue */
+        #1B3B59 30%,    /* Medium dark blue */
+        #3A5F8A 45%,    /* Medium blue */
+        #5D8FCC 60%,    /* Lighter blue */
+        #7A52CC 75%,    /* Purple - transition color */
+        #00D4D4 90%,    /* Bright teal - solution emerging */
+        #00FFE0 100%    /* Bright cyan - problem resolved */
     );
-    background-size: 100% 300%;
+    background-size: 100% 400%;
     background-position: 0% 0%;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    transition: background-position 0.3s ease-out;
+    transition: background-position 0.5s ease-out;
     z-index: -1; /* Behind all content */
     pointer-events: none; /* Don't interfere with clicks */
 }
