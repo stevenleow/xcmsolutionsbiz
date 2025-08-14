@@ -92,11 +92,14 @@ body {
     background: linear-gradient(
         to bottom,
         #030A12 0%,     /* Very dark blue - hero section */
-        #0A1A2E 20%,    /* Dark blue */
-        #1A3A5F 40%,    /* Medium dark blue */
-        #2D5A8C 60%,    /* Medium blue */
-        #4A7CB0 80%,    /* Light blue */
-        #00B4D8 100%    /* Bright teal - CTA section */
+        #0A1A2E 15%,    /* Dark blue */
+        #1A3A5F 30%,    /* Medium dark blue */
+        #2D5A8C 45%,    /* Medium blue */
+        #4A7CB0 60%,    /* Light blue */
+        #00B4D8 75%,    /* Bright teal - CTA section */
+        #66D1E0 85%,    /* Lighter teal */
+        #B9F3FC 95%,    /* Pale aqua */
+        #E0FBFC 100%    /* Very pale aqua - extended highlight */
     );
     background-size: 100% 400%;
     background-position: 0% 0%;
