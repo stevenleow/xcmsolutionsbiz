@@ -336,7 +336,7 @@ function initTypeWriter() {
     try {
         const txtElement = document.querySelector('#typing-text');
         const words = [
-            "ROI-Focused Solutions",
+            "ROI-Focused AI Solutions",
             "Business-Optimized Technology",
             "Dependable Infrastructure",
             "Intelligent Automation",
