@@ -377,6 +377,7 @@ a:hover { color: var(--primary); }
 .typing-text .text {
     display: inline;
     color: white; /* Fallback for older browsers */
+    font-size: clamp(2rem, 5vw, 3.5rem);
     line-height: 1.4;
 }
 
@@ -507,25 +508,25 @@ section:not(.dark) .scroll-indicator:hover {
 }
 
 /* Standardized main-title styles for all sections */
-.main-title {
-    font-size: 2.8rem;
+.main-title,
+.hero .hero-title,
+.hero .hero-title-line,
+.section-header .main-title {
+    color: var(--white) !important;
+    font-size: clamp(2rem, 5vw, 3.5rem);
     line-height: 1.2;
-    margin-bottom: 1.5rem;
+    margin: 0 auto 1.5rem;
     position: relative;
-}
-
-/* Specific section overrides */
-.advantage .main-title {
-    color: var(--text); /* Changed from var(--white) */
     text-align: center;
+    max-width: 1200px;
+    width: 90%;
 }
 
-/* Ensure consistent color for other sections */
-.hero .main-title,
-.solutions .main-title,
-.process .main-title,
-.cta .main-title {
-    color: var(--heading-color);
+/* Ensure text gradient still works */
+.text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .advantage .main-subtitle {
@@ -1373,6 +1374,6 @@ section:not(.dark) .scroll-indicator:hover {
   display: none;
 }
 
-   Development Borders
+/* Development Borders
    ======================================= */
 
