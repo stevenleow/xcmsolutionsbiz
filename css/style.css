@@ -529,10 +529,16 @@ section:not(.dark) .scroll-indicator:hover {
     -webkit-text-fill-color: transparent;
 }
 
+/* Main subtitle styles - centered and matching main title width */
+.main-subtitle,
 .advantage .main-subtitle {
-    color: var(--text-light); /* Changed from rgba(255, 255, 255, 0.85) */
+    color: var(--white) !important;
     font-size: 1.1rem;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;
+    text-align: center;
+    max-width: 1200px;
+    width: 90%;
+    line-height: 1.6;
 }
 
 .advantage .benefit-item {
