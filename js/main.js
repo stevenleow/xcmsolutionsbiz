@@ -76,71 +76,17 @@ function throttle(callback, limit) {
     };
 }
 
-// Create debug element
+// Debug element functionality (kept in code but not displayed)
 function createDebugElement() {
-    const debugEl = document.createElement('div');
-    debugEl.id = 'gradient-debug';
-    debugEl.style.position = 'fixed';
-    debugEl.style.bottom = '20px';
-    debugEl.style.right = '20px';
-    debugEl.style.background = 'rgba(0,0,0,0.7)';
-    debugEl.style.color = 'white';
-    debugEl.style.padding = '10px';
-    debugEl.style.borderRadius = '5px';
-    debugEl.style.fontFamily = 'monospace';
-    debugEl.style.zIndex = '9999';
-    debugEl.style.fontSize = '12px';
-    debugEl.style.pointerEvents = 'none';
-    debugEl.style.maxWidth = '300px';
-    debugEl.style.overflow = 'hidden';
-    debugEl.style.wordBreak = 'break-all';
-    
-    // Add a visual indicator of the current gradient position
-    const gradientPreview = document.createElement('div');
-    gradientPreview.style.height = '10px';
-    gradientPreview.style.marginTop = '5px';
-    gradientPreview.style.borderRadius = '5px';
-    gradientPreview.style.background = 'linear-gradient(to right, var(--primary), var(--primary-dark), var(--accent), var(--secondary))';
-    debugEl.appendChild(gradientPreview);
-    
-    const positionIndicator = document.createElement('div');
-    positionIndicator.style.position = 'absolute';
-    positionIndicator.style.top = '0';
-    positionIndicator.style.width = '2px';
-    positionIndicator.style.height = '100%';
-    positionIndicator.style.background = 'white';
-    positionIndicator.style.transform = 'translateX(-50%)';
-    gradientPreview.style.position = 'relative';
-    gradientPreview.appendChild(positionIndicator);
-    
-    document.body.appendChild(debugEl);
-    
-    // Make updateDebugInfo globally available
-    window.updateDebugInfo = (scrollPos, docHeight, scrollPerc, bgPos) => {
-        debugEl.innerHTML = `
-            <div>Scroll: ${Math.round(scrollPos)}px / ${docHeight}px</div>
-            <div>Progress: ${(scrollPerc * 100).toFixed(1)}%</div>
-            <div>Gradient: ${bgPos.toFixed(1)}%</div>
-        `;
-        
-        // Re-add the gradient preview and indicator
-        debugEl.appendChild(gradientPreview);
-        gradientPreview.appendChild(positionIndicator);
-        
-        // Update the position indicator
-        const indicatorPos = (bgPos / 80) * 100; // 80 is our maxPosition
-        positionIndicator.style.left = `${indicatorPos}%`;
+    // Return a mock object with a no-op updatePosition method
+    return {
+        updatePosition: function() {}
     };
-    
-    return debugEl;
 }
 
 // Initialize everything when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     try {
-        // Create debug element
-        const debugEl = createDebugElement();
-        
         // Initialize TypeWriter functionality
         initTypeWriter();
         
@@ -158,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const scrollPercentage = documentHeight > 0 ? Math.min(scrollPosition / documentHeight, 1) : 0;
             const backgroundPosition = Math.round(scrollPercentage * 66.67 * 100) / 100;
             
+            const debugEl = createDebugElement();
             debugEl.innerHTML = `
                 <div>Scroll: ${Math.round(scrollPosition)}px</div>
                 <div>Doc Height: ${documentHeight}px</div>
