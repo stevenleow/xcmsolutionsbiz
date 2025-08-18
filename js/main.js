@@ -409,16 +409,60 @@ function initTimelineAnimation() {
 }
 
 
+// Animate apostrophes in strapline text with breathing effect
+function initStraplineAnimation() {
+    const strapline = document.querySelector('.strapline');
+    if (!strapline) {
+        console.log('Strapline element not found');
+        return;
+    }
+
+    // Get the text content
+    const text = strapline.textContent;
+    
+    // Replace apostrophes with spans for animation
+    const html = text.replace(/'/g, '<span class="strapline-quote">\'</span>');
+    strapline.innerHTML = html;
+    
+    const quoteElements = strapline.querySelectorAll('.strapline-quote');
+    if (quoteElements.length !== 2) {
+        console.log('Expected 2 apostrophes for breathing animation');
+        return;
+    }
+    
+    console.log('Initializing breathing animation for apostrophes');
+    
+    // Start with first quote breathing in, second breathing out
+    quoteElements[0].classList.add('breathing-in');
+    quoteElements[1].classList.add('breathing-out');
+    
+    // Breathing cycle duration in milliseconds (20% faster than before)
+    const BREATH_DURATION = 3200;
+    
+    function toggleBreathing() {
+        // Toggle breathing states between the two apostrophes
+        quoteElements[0].classList.toggle('breathing-in');
+        quoteElements[0].classList.toggle('breathing-out');
+        
+        quoteElements[1].classList.toggle('breathing-in');
+        quoteElements[1].classList.toggle('breathing-out');
+        
+        // Schedule the next toggle
+        setTimeout(toggleBreathing, BREATH_DURATION);
+    }
+    
+    // Start the breathing cycle
+    setTimeout(toggleBreathing, BREATH_DURATION);
+}
+
 // Main initialization call
 document.addEventListener('DOMContentLoaded', function() {
-    
-    
     try {
         initTypeWriter();
         initServicesCarousel();
         initTimelineAnimation();
-        
+        initStraplineAnimation();
     } catch (error) {
-        
+        console.error('Initialization error:', error);
     }
 });
