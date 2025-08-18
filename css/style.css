@@ -955,6 +955,12 @@ section:not(.dark) .scroll-indicator:hover {
     display: none;
 }
 
+/* Visual feedback during scroll reset */
+.process-content-wrapper.resetting-scroll {
+    transition: scroll-behavior 0.1s ease-out !important;
+    scroll-behavior: auto !important;
+}
+
 .process-timeline {
     position: relative;
     width: 100%;

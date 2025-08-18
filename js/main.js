@@ -47,15 +47,6 @@ function updateGradientPosition() {
         gradientOverlay.style.backgroundPosition = `0% ${gradientPosition}%`;
     }
     
-    // Log to console for debugging
-    console.log('Gradient position updated:', {
-        scrollPosition,
-        gradientPosition: gradientPosition + '%',
-        heroEnd,
-        ctaStart,
-        gradientRange
-    });
-    
     // Update debug info if it exists
     if (window.updateDebugInfo) {
         window.updateDebugInfo(scrollPosition, documentHeight, (scrollPosition / documentHeight), gradientPosition);
@@ -169,6 +160,56 @@ function initBackToTop() {
     // Smooth scroll to top when clicked
     backToTopButton.addEventListener('click', function(e) {
         e.preventDefault();
+        
+        const processSection = document.getElementById('process');
+        if (!processSection) return;
+
+        // Get the process section's position
+        const sectionRect = processSection.getBoundingClientRect();
+        const isPartiallyInView = (
+            sectionRect.top <= window.innerHeight &&
+            sectionRect.bottom >= 0
+        );
+        const isAboveViewport = sectionRect.bottom < 0;
+
+        // If we're in or above the process section, try to reset any scrolling
+        if (isPartiallyInView || isAboveViewport) {
+            // Try different elements that might be scrollable
+            const elementsToCheck = [
+                '.process-content-wrapper',
+                '.process-timeline',
+                'html, body'
+            ];
+
+            let foundScrollable = false;
+
+            elementsToCheck.forEach(selector => {
+                const el = document.querySelector(selector);
+                if (!el) return;
+
+                const scrollTop = el.scrollTop || document.documentElement.scrollTop || document.body.scrollTop;
+
+                if (scrollTop > 10) {
+                    foundScrollable = true;
+                    
+                    // Smooth scroll to top
+                    el.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+
+            if (!foundScrollable) {
+                // As a last resort, try scrolling the window to the top of the process section
+                processSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+        
+        // Original scroll to top behavior
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -455,10 +496,83 @@ function initStraplineAnimation() {
     setTimeout(toggleBreathing, BREATH_DURATION);
 }
 
+// Function to handle process timeline auto-scroll
+function initProcessTimelineScroll() {
+    const processSection = document.getElementById('process');
+    const contentWrapper = document.querySelector('.process-content-wrapper');
+    let scrollTimeout;
+    let hasScrolled = false;
+    
+    if (!processSection || !contentWrapper) {
+        console.log('Process section or content wrapper not found');
+        return;
+    }
+    
+    // Function to reset scroll position
+    function resetScroll() {
+        if (contentWrapper) {
+            contentWrapper.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            hasScrolled = false;
+        }
+    }
+    
+    // Create intersection observer to detect when process section is in/out of view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Clear any pending timeouts
+                clearTimeout(scrollTimeout);
+                
+                // Only auto-scroll if we haven't scrolled yet
+                if (!hasScrolled) {
+                    scrollTimeout = setTimeout(() => {
+                        const scrollAmount = contentWrapper.scrollHeight * 0.6;
+                        
+                        // Make sure the element is scrollable
+                        contentWrapper.style.overflowY = 'auto';
+                        contentWrapper.style.scrollBehavior = 'smooth';
+                        
+                        // Smooth scroll the content wrapper
+                        contentWrapper.scrollTo({
+                            top: scrollAmount,
+                            behavior: 'smooth'
+                        });
+                        
+                        hasScrolled = true;
+                    }, 2900); // 2.9 seconds delay
+                }
+            } else {
+                // When scrolling out of view, reset the scroll position
+                resetScroll();
+            }
+        });
+    }, {
+        threshold: 0.3, // Trigger when 30% of the section is visible
+        rootMargin: '0px 0px -100px 0px' // Adjust the bottom margin to trigger slightly earlier
+    });
+    
+    // Observe the process section
+    observer.observe(processSection);
+    
+    // Also reset scroll when the page is unloaded
+    window.addEventListener('beforeunload', resetScroll);
+    
+    // Cleanup function
+    return () => {
+        clearTimeout(scrollTimeout);
+        observer.disconnect();
+        window.removeEventListener('beforeunload', resetScroll);
+    };
+}
+
 // Main initialization call
 document.addEventListener('DOMContentLoaded', function() {
     try {
         initTypeWriter();
+        initProcessTimelineScroll();
         initServicesCarousel();
         initTimelineAnimation();
         initStraplineAnimation();
