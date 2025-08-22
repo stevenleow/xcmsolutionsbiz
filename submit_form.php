@@ -1,4 +1,7 @@
 <?php
+// Include security headers
+require_once 'includes/security_headers.php';
+
 // Start session for CSRF token
 session_start();
 
