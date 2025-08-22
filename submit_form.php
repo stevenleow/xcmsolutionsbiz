@@ -37,10 +37,7 @@ function logMessage($message, $data = null) {
 }
 
 // --- Database credentials ---
-$servername = "localhost";
-$username = "xcmswvfv_formuser";
-$password = "vaTtyz-0bascy-kudkut";
-$dbname = "xcmswvfv_formdb";
+$config = include '/home/xcmswvfv/config/db_config.php';
 
 // --- Pushover credentials ---
 $pushover_user = "YOUR_USER_KEY";
@@ -99,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Connect to database
-        $conn = new mysqli($servername, $username, $password, $dbname);
+        $conn = new mysqli($config['servername'], $config['username'], $config['password'], $config['dbname']);
         
         // Check connection
         if ($conn->connect_error) {
