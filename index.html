@@ -227,7 +227,7 @@
                         <p>Your vision, powered by our expertise.<br>The journey begins now.</p>
                     </div>
                     <h3 class="form-title">Take the First Step</h3>
-                    <form id="contactForm" class="contact-form" autocomplete="on">
+                    <form id="contactForm" class="contact-form" autocomplete="on" action="submit_form.php" method="post">
                         <div class="form-group">
                             <input type="text" id="name" name="name" autocomplete="name" required>
                             <label for="name">Your Name</label>
@@ -321,7 +321,105 @@
     <!-- Swiper.js JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     
+    <!-- Success Popup -->
+    <div id="successPopup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Thank You!</h3>
+            <p id="popupMessage">Your message has been sent successfully. We'll get back to you soon!</p>
+            <button class="btn btn-primary" id="closePopup">Close</button>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="js/main.js"></script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            const contactForm = document.getElementById('contactForm');
+            const successPopup = document.getElementById('successPopup');
+            const popupMessage = document.getElementById('popupMessage');
+            const closePopup = document.getElementById('closePopup');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    try {
+                        // Convert FormData to URL-encoded string
+                        const formData = new URLSearchParams();
+                        formData.append('name', contactForm.querySelector('[name="name"]').value);
+                        formData.append('email', contactForm.querySelector('[name="email"]').value);
+                        formData.append('message', contactForm.querySelector('[name="message"]').value);
+                        
+                        console.log('Sending form data:', formData.toString());
+                        
+                        const response = await fetch(contactForm.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'Accept': 'application/json'
+                            }
+                        });
+                        
+                        // Log the raw response for debugging
+                        const responseText = await response.text();
+                        console.log('Raw response:', responseText);
+                        console.log('Response status:', response.status);
+                        console.log('Response headers:', [...response.headers.entries()]);
+                        
+                        let data;
+                        try {
+                            data = responseText ? JSON.parse(responseText) : {};
+                        } catch (jsonError) {
+                            console.error('Failed to parse JSON response:', jsonError);
+                            console.error('Response that failed to parse:', responseText);
+                            throw new Error('Invalid response from server: ' + responseText);
+                        }
+                        
+                        if (data && data.success) {
+                            popupMessage.textContent = data.message || 'Thank you for your submission!';
+                            contactForm.reset();
+                        } else {
+                            popupMessage.textContent = data.message || 'An error occurred. Please try again.';
+                        }
+                        
+                        // Show the popup
+                        if (successPopup) {
+                            successPopup.classList.add('show');
+                        }
+                        
+                    } catch (error) {
+                        console.error('Form submission error:', error);
+                        popupMessage.textContent = 'An error occurred. Please try again later.';
+                        if (successPopup) {
+                            successPopup.classList.add('show');
+                        }
+                    }
+                });
+            }
+
+            if (closePopup && successPopup) {
+                closePopup.addEventListener('click', function() {
+                    successPopup.classList.remove('show');
+                });
+                
+                // Close popup when clicking outside the content
+                successPopup.addEventListener('click', function(e) {
+                    if (e.target === successPopup) {
+                        successPopup.classList.remove('show');
+                    }
+                });
+            }
+            
+        } catch (error) {
+            console.error('Initialization error:', error);
+        }
+    });
+    </script>
 </body>
 </html>
