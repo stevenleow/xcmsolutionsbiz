@@ -363,6 +363,7 @@ if (!isset($_SESSION['csrf_token'])) {
                         formData.append('name', contactForm.querySelector('[name="name"]').value);
                         formData.append('email', contactForm.querySelector('[name="email"]').value);
                         formData.append('message', contactForm.querySelector('[name="message"]').value);
+                        formData.append('csrf_token', contactForm.querySelector('[name="csrf_token"]').value);
                         
                         const response = await fetch(contactForm.action, {
                             method: 'POST',
