@@ -467,11 +467,8 @@ function initStraplineAnimation() {
     
     const quoteElements = strapline.querySelectorAll('.strapline-quote');
     if (quoteElements.length !== 2) {
-        console.log('Expected 2 apostrophes for breathing animation');
         return;
     }
-    
-    console.log('Initializing breathing animation for apostrophes');
     
     // Start with first quote breathing in, second breathing out
     quoteElements[0].classList.add('breathing-in');

@@ -1,4 +1,14 @@
 <?php
+// Start session for CSRF token
+session_start();
+
+// Only allow POST requests
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    // Redirect to homepage if accessed directly
+    header('Location: /');
+    exit;
+}
+
 // Enable error reporting
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -38,6 +48,19 @@ $pushover_token = "YOUR_APP_TOKEN";
 
 // Process POST request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Verify CSRF token
+    if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
+        !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        logMessage('CSRF token validation failed', [
+            'session_token' => $_SESSION['csrf_token'] ?? 'not set',
+            'posted_token' => $_POST['csrf_token'] ?? 'not set'
+        ]);
+        sendResponse(false, 'Invalid security token. Please refresh the page and try again.', 403);
+    }
+    
+    // Unset the used token to prevent reuse
+    unset($_SESSION['csrf_token']);
+    
     try {
         // Log the incoming request
         logMessage('New form submission', [
@@ -102,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             logMessage('Submission successful', ['email' => $email]);
             $stmt->close();
             $conn->close();
-            sendResponse(true, 'Thank you! Your submission has been recorded. We will get back to you soon.');
+            sendResponse(true, 'Thank you for reaching out! Your message is on its way to our team. We\'re excited to connect with you and will be in touch shortly. Have a wonderful day!');
         } else {
             logMessage('Execute failed', $stmt->error);
             $stmt->close();
