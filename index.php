@@ -4,6 +4,10 @@ require_once 'includes/security_headers.php';
 
 // Start session for CSRF token
 session_start();
+
+// Include and initialize access logging
+require_once 'init_access_logging.php';
+
 // Generate CSRF token if it doesn't exist
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
